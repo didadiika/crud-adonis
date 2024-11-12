@@ -9,8 +9,8 @@ class CategorySchema extends Schema {
       table.uuid('id').primary()
       table.text('name').nullable()
       table.datetime('created_at').notNullable().defaultTo(this.fn.now())
-      table.datetime('updated_at').defaultTo(null)
-      table.datetime('deleted_at').defaulTo(null)
+      table.datetime('updated_at').nullable()
+      table.datetime('deleted_at').nullable()
     })
   }
 
