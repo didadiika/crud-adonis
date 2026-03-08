@@ -4,9 +4,13 @@
  */
 
 export const controllers = {
+  admin: {
+    Jurusans: () => import('#controllers/admin/jurusans_controller'),
+  },
   NewAccount: () => import('#controllers/new_account_controller'),
   Session: () => import('#controllers/session_controller'),
   visitor: {
     Login: () => import('#controllers/visitor/login_controller'),
+    Registers: () => import('#controllers/visitor/registers_controller'),
   },
 }
