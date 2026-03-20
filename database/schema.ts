@@ -7,76 +7,23 @@
 import { BaseModel, column } from '@adonisjs/lucid/orm'
 import { DateTime } from 'luxon'
 
-export class JurusanSchema extends BaseModel {
-  static $columns = ['createdAt', 'deletedAt', 'id', 'jurusanName', 'updatedAt'] as const
-  $columns = JurusanSchema.$columns
-  @column.dateTime({ autoCreate: true })
-  declare createdAt: DateTime | null
-  @column.dateTime()
-  declare deletedAt: DateTime | null
-  @column({ isPrimary: true })
-  declare id: string
-  @column()
-  declare jurusanName: string
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  declare updatedAt: DateTime | null
-}
-
-export class KelaSchema extends BaseModel {
-  static $columns = ['createdAt', 'deletedAt', 'id', 'jurusanId', 'kelasName', 'updatedAt'] as const
-  $columns = KelaSchema.$columns
-  @column.dateTime({ autoCreate: true })
-  declare createdAt: DateTime | null
-  @column.dateTime()
-  declare deletedAt: DateTime | null
-  @column({ isPrimary: true })
-  declare id: string
-  @column()
-  declare jurusanId: string
-  @column()
-  declare kelasName: string
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  declare updatedAt: DateTime | null
-}
-
-export class SiswaSchema extends BaseModel {
-  static $columns = ['address', 'createdAt', 'dateOfBirth', 'deletedAt', 'gender', 'id', 'kelasId', 'siswaName', 'studentImage', 'updatedAt'] as const
-  $columns = SiswaSchema.$columns
-  @column()
-  declare address: string | null
-  @column.dateTime({ autoCreate: true })
-  declare createdAt: DateTime | null
-  @column.date()
-  declare dateOfBirth: DateTime | null
-  @column.dateTime()
-  declare deletedAt: DateTime | null
-  @column()
-  declare gender: string
-  @column({ isPrimary: true })
-  declare id: string
-  @column()
-  declare kelasId: string
-  @column()
-  declare siswaName: string | null
-  @column()
-  declare studentImage: string | null
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  declare updatedAt: DateTime | null
-}
-
 export class UserSchema extends BaseModel {
-  static $columns = ['createdAt', 'email', 'fullName', 'id', 'password', 'updatedAt'] as const
+  static $columns = ['createdAt', 'email', 'firstName', 'id', 'lastName', 'password', 'rememberMeToken', 'updatedAt'] as const
   $columns = UserSchema.$columns
   @column.dateTime({ autoCreate: true })
-  declare createdAt: DateTime
+  declare createdAt: DateTime | null
   @column()
   declare email: string
   @column()
-  declare fullName: string | null
+  declare firstName: string
   @column({ isPrimary: true })
   declare id: number
+  @column()
+  declare lastName: string | null
   @column({ serializeAs: null })
   declare password: string
+  @column()
+  declare rememberMeToken: string | null
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime | null
 }

@@ -10,14 +10,18 @@
 //import { middleware } from '#start/kernel'
 import { controllers } from '#generated/controllers'
 import router from '@adonisjs/core/services/router'
+//import  { request } from 'http'
 
-router
-  .get('/', async ({ response }) => {
-    return response.redirect('/login')
-  })
-  .as('home')
-router.get('/login', [controllers.visitor.Login, 'index'])
-router.post('/login', [controllers.visitor.Login, 'login'])
 
-router.get('/jurusans', [controllers.admin.Jurusans, 'index'])
+router.get('/home', ({ view }) => {
+  return view.render('home')
+})
+
+router.get('/about', async ({ view }) => {
+  return view.render('about')
+})
+
+router.get('/contact', async ({ view }) => { 
+  return view.render('contact')
+})
 

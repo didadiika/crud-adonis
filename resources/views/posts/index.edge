@@ -1,0 +1,42 @@
+<h1>{{ title }}</h1>
+
+
+
+
+
+
+@each(user in users)
+
+    @if(user.hidden == true)
+    <p>{{ user.name }} is hidden</p>
+    @else
+    <p>{{ user.name }} is visible</p>
+    @end
+
+@end
+
+
+@if(users.length > 0)
+    <p>We have {{ users.length }} users</p>
+<table border ="1">
+    <tr>
+        <th>Number</th>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Hidden</th>
+    </tr>
+
+    {{-- Render Data --}}
+    
+    @each((user, index) in users)
+    <tr>
+        <td>{{ index + 1 }}</td>
+        <td>{{ user.id }}</td>
+        <td>{{ user.name }}</td>
+        <td>{{ user.hidden }}</td>
+    @end
+    {{-- End Render Data --}}
+</table>
+@end
+
+

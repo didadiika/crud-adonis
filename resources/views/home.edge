@@ -1,0 +1,16 @@
+{{-- Import Tampilan layouts/main.edge --}}
+@component('layouts/main')
+
+  @slot('title')
+    Halaman Home
+  @endslot
+
+  @slot('content')
+    <h4>Home page</h4>
+    @!component('components/button', { class: 'btn btn-success', text: 'Simpan' }) 
+    @!component('components/button', { class: 'btn btn-primary', text: 'Batal' }) 
+  @endslot
+
+@endcomponent
+
+
