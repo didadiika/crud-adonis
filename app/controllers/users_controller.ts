@@ -27,7 +27,7 @@ export default class UsersController {
     const { name, email, password } = request.only(['name', 'email', 'password'])
     try {
       const user = await User.create({
-        first_name: name,
+        firstName: name,
         email: email,
         password: password,
       })

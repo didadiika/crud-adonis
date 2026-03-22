@@ -1,0 +1,99 @@
+@pushTo('js-page-footer')
+<script>
+$(document).ready(function() {
+
+/*----- Ketika Tombol Edit di Tabel Ditekan-------*/
+  $('#tabel').on('click','.item_edit',function(){
+    const id = $(this).attr('data-id');
+
+    $.ajax({
+      url:`/master-data/fakultas/${id}`,
+      method: 'GET',
+      success: function(data) {
+        $("#form-update").attr('action',`/master-data/fakultas/${id}`);
+        $('#form-update').find('[name="name"]').val(data.facultyName);
+        $('#modal-edit').modal('show');
+      },
+      error: function(err) {
+        alert('Gagal mengambil data!')
+        console.log(err)
+      }
+    })
+  })
+/*----- Ketika Tombol Edit di Tabel Ditekan-------*/
+
+/*----- Ketika Tombol Hapus di Tabel Ditekan-------*/
+$('#tabel').on('click','.item_hapus',function(){
+    const id = $(this).attr('data-id');
+    $.ajax({
+      url:`/master-data/fakultas/${id}`,
+      method: 'GET',
+      success: function(data) {
+        $("#form-hapus").attr('action',`/master-data/fakultas/${id}`);
+        $('#modal-hapus').modal('show');
+      },
+      error: function(err) {
+        alert('Gagal mengambil data!')
+        console.log(err)
+      }
+    })
+});
+/*----- Ketika Tombol Hapus di Tabel Ditekan-------*/
+
+
+
+
+/*----- Ketika Form Update di Modal di Submit -------*/
+$("#form-update").submit(function(e) {
+e.preventDefault(); // avoid to execute the actual submit of the form.
+const form = $(this);
+const actionUrl = form.attr('action');
+const method = form.attr('method');
+$.ajax({
+    type: method,
+    url: actionUrl,
+    data: form.serialize(), // serializes the form's elements.
+    success: function(data)
+    {
+      console.log('Submit Berhasil !');
+      //table.ajax.reload(null, false);
+      location.reload();
+    },
+    error: function (data) {
+      console.log('Submit Error !'+form.serialize());
+    },
+});
+$("#form-update")[0].reset();
+$("#modal-edit").modal('hide');
+
+})
+/*----- Ketika Form Update di Modal di Submit -------*/
+
+
+$("#form-hapus").submit(function(e) {
+  e.preventDefault(); // avoid to execute the actual submit of the form.
+  var form = $(this);
+  var actionUrl = form.attr('action');
+  var method = form.attr('method');
+  var formData = new FormData($(this)[0]);
+  $.ajax({
+          type: method,
+          url: actionUrl,
+          data:formData, // serializes the form's elements.
+          processData: false,
+          contentType: false,
+          success: function(data)
+          {
+            console.log('Submit Hapus Berhasil !');
+            location.reload();
+          },
+          error: function (data) {
+            console.log('Submit Error !');
+          },
+  });
+    $("#ModalHapus").modal('hide');
+});
+
+})
+</script>
+@endpushTo

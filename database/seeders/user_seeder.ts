@@ -1,18 +1,13 @@
 import { BaseSeeder } from '@adonisjs/lucid/seeders'
 import User from '#models/user'
 import { DateTime } from 'luxon'
+// import Hash from '@adonisjs/core/services/hash'
 
 const users = [
   {
-    first_name: 'John',
-    email: 'john@example.com',
-    password: 'password',
-    created_at: DateTime.now(),
-  },
-  {
-    first_name: 'Jane',
-    email: 'jane@example.com',
-    password: 'password',
+    first_name: 'Dika',
+    email: 'didadiika@gmail.com',
+    password: '12345678',
     created_at: DateTime.now(),
   }
 ]

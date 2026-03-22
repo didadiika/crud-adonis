@@ -10,25 +10,29 @@
 //import { middleware } from '#start/kernel'
 import { controllers } from '#generated/controllers'
 import router from '@adonisjs/core/services/router'
+import { middleware } from './kernel.ts'
 //import  { request } from 'http'
 
 
-router.get('/', ({ view }) => {
-  return view.render('home')
+// Router Public
+router.get('/', async ({ response }) => {
+  return response.redirect('/login')
 })
+router.get('/login', [controllers.Login, 'index'])
+router.post('/login/auth', [controllers.Login, 'auth'])
 
-router.get('/home', ({ view }) => {
-  return view.render('home')
-})
 
-router.get('/about', async ({ view }) => {
-  return view.render('about')
-})
+// Router dengan Login dahulu baru bisa akses dashboard dan logout
+router.group(() => {
+      router.get('/dashboard', [controllers.Dashboard, 'index'])
+      router.get('/logout', [controllers.Login, 'logout'])
+      router.resource('/master-data/fakultas', controllers.Fakultas)
+      }).middleware(middleware.auth())
 
-router.get('/contact', async ({ view }) => { 
-  return view.render('contact')
-})
 
+
+
+      
 router.get('/users', [controllers.Users, 'index'])
 router.post('/users', [controllers.Users, 'store'])
 router.get('/users/:id', [controllers.Users, 'show'])

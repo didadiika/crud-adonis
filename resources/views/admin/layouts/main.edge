@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+@include('admin/partials/header')
+
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+<header class="main-header">
+<!-- Logo -->
+<a href="{{ config('app.appUrl') }}" class="logo">
+    <!-- mini logo for sidebar mini 50x50 pixels -->
+    <span class="logo-mini"><b>S</b>R</span>
+    <!-- logo for regular state and mobile devices -->
+    <span class="logo-lg"><b>Sri Rejeki</b></span>
+</a>
+<!-- Header Navbar: style can be found in header.less -->
+<nav class="navbar navbar-static-top">
+    <!-- Sidebar toggle button-->
+    <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+    <span class="sr-only">Toggle navigation</span>
+    </a>
+
+    
+</nav>
+</header>
+
+
+@include('admin/partials/navbar')
+
+<div class="content-wrapper">  
+@stack('content')
+@stack('modal')
+</div>
+
+@include('admin/partials/footer')
+
+<!--JavaScript Global-->
+<script src="{{ asset('bootstrap-admin-lte/bower_components/jquery-ui/jquery-ui.min.js') }}"></script>
+<script>
+$.widget.bridge('uibutton', $.ui.button);
+</script>
+<script src="{{ asset('bootstrap-admin-lte/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('bootstrap-admin-lte/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
+<script src="{{ asset('bootstrap-admin-lte/bower_components/fastclick/lib/fastclick.js') }}"></script>
+<script src="{{ asset('bootstrap-admin-lte/dist/js/adminlte.min.js') }}"></script>
+
+@stack('js-page-footer')
+
+</body>
+</html>
+
