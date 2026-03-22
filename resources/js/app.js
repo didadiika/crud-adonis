@@ -1,3 +1,4 @@
+import '../scss/app.scss'
 import Alpine from 'alpinejs'
 
 Alpine.data('alert', function () {

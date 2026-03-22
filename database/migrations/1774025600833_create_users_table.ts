@@ -13,8 +13,9 @@ export default class extends BaseSchema {
       table.string('last_name', 255).nullable()
       table.string('remember_me_token').nullable()
 
-      table.timestamp('created_at', { useTz: true })
-      table.timestamp('updated_at', { useTz: true })
+      table.timestamp('created_at', { useTz: true }).defaultTo(this.now())
+      table.timestamp('updated_at', { useTz: true }).nullable().defaultTo(null)
+      table.timestamp('deleted_at', { useTz: true }).nullable().defaultTo(null)
     })
   }
 

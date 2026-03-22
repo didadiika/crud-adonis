@@ -3,6 +3,7 @@ import hash from '@adonisjs/core/services/hash'
 import { compose } from '@adonisjs/core/helpers'
 import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
 
+
 /**
  * User model represents a user in the application.
  * It extends UserSchema and includes authentication capabilities
@@ -21,4 +22,8 @@ export default class User extends compose(UserSchema, withAuthFinder(hash)) {
     }
     return `${first.slice(0, 2)}`.toUpperCase()
   }
+  @column({isPrimary: true})
+  public id: number
+
+  
 }
