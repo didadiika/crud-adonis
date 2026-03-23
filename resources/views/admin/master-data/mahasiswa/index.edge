@@ -1,0 +1,67 @@
+{{-- Import Tampilan layouts/main.edge --}}
+@component('admin/layouts/main', { segments:segments })
+
+  @slot('title')
+    Mahasiswa
+  @endslot
+
+@endcomponent
+
+@include('admin/master-data/mahasiswa/css')
+@include('admin/master-data/mahasiswa/js')
+@include('admin/master-data/mahasiswa/modal')
+
+@pushTo('content')
+<section class="content-header">
+      <h1>Mahasiswa</h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-navicon"></i> Master Data</a></li>
+        <li class="active">Mahasiswa</li>
+      </ol>
+</section>
+
+<section class="content">
+<a class="btn btn-app" href="#" data-toggle="modal" data-target="#modal-input">
+  <i class="fa fa-plus"></i> Tambah Data
+</a>
+
+<div class="box">
+  <!--Tombol Tambah Data-->
+
+            <div class="box-header">
+              <h3 class="box-title">Daftar Mahasiswa</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+@if(students.length > 0)
+              <div class="table-responsive">
+              <table id="tabel" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Jurusan</th>
+                  <th>NIM</th>
+                  <th>Nama Mahasiswa</th>
+                  <th>Jenis Kelamin</th>
+                  <th>Tanggal Lahir</th>
+                  <th>Alamat</th>
+                  <th>Aksi</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+@else
+
+<div class="alert alert-warning alert-dismissible">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  <h4><i class="icon fa fa-ban"></i> Peringatan!</h4>
+  Data tidak ditemukan...
+</div>
+
+@endif
+</div>
+</div>
+</section>
+@endpushTo

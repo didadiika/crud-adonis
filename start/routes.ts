@@ -30,7 +30,10 @@ router.group(() => {
     router.get('/master-data/fakultas/search/data', [controllers.Fakultas, 'search'])
     router.get('/master-data/fakultas/datatable/show', [controllers.Fakultas, 'datatable'])
     router.resource('/master-data/jurusan', controllers.Jurusans)
+    router.get('/master-data/jurusan/search/data', [controllers.Jurusans, 'search'])
     router.get('/master-data/jurusan/datatable/show', [controllers.Jurusans, 'datatable'])
+    router.resource('/master-data/mahasiswa', controllers.Mahasiswas)
+    router.get('/master-data/mahasiswa/datatable/show', [controllers.Mahasiswas, 'datatable'])
   }).middleware(middleware.auth())
   
 

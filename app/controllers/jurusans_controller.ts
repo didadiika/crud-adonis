@@ -44,16 +44,22 @@ export default class JurusansController {
    */
   async show({ params, response }: HttpContext) {
     const { id } = params
-    const faculty = await Major.query().where('id', id)
+    const major = await Major.query().where('id', id)
     .whereNull('deleted_at')
     .preload('faculty').first()
-    return response.status(200).json(faculty)
+    return response.status(200).json(major)
   }
 
   /**
    * Edit individual record
    */
-  async edit({ params }: HttpContext) {}
+  async edit({ params, response }: HttpContext) {
+    const { id } = params
+    const major = await Major.query().where('id', id)
+    .whereNull('deleted_at')
+    .preload('faculty').first()
+    return response.status(200).json(major)
+  }
 
   /**
    * Handle form submission for the edit action
@@ -95,6 +101,51 @@ export default class JurusansController {
       return response.status(500).json({ error: 'Internal Server Error' })
     }
   }
+
+  async search({ response, request }: HttpContext) {
+      const search = request.input('search', '').trim()
+      const page = request.input('page')
+      const limit = request.input('limit')
+      const offset = limit * (page - 1)
+      try {
+        const data = await Major.query()
+        .whereRaw('major_name LIKE ? COLLATE utf8mb4_general_ci', [`%${search}%`])
+        .orderBy('major_name', 'asc')
+        .whereNull('deleted_at')
+        .forPage(page, limit)
+  
+        const totalResult = await Major.query()
+        .whereNull('deleted_at')
+        .count('* as total')
+  
+        // Count data setelah filter
+        const filteredResult = await Major.query()
+        .whereRaw('major_name LIKE ? COLLATE utf8mb4_general_ci', [`%${search}%`])
+        .whereNull('deleted_at')
+        .count('* as total')
+  
+        const total = Number(totalResult[0].$extras.total)
+        const filtered = Number(filteredResult[0].$extras.total)
+        const mappedData = data.map((item) => ({
+          id: item.id,
+          text: item.majorName
+        }))
+        return response.status(200).json({
+        data: mappedData,
+        meta: {
+          total: total,            // jumlah semua data
+          total_filtered: filtered, // jumlah data setelah filter
+          page: page,
+          limit: limit
+        }
+        })
+      } catch (error) {
+          return response.status(400).json({
+            error: 'Failed to search data',
+            detail: error.message
+          })
+        }
+    }
 
   async datatable({ request, response }: HttpContext) {
       const start = Number(request.input('start', 0))

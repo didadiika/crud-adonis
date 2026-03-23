@@ -31,7 +31,7 @@ export class MajorSchema extends BaseModel {
   declare createdAt: DateTime | null
   @column.dateTime()
   declare deletedAt: DateTime | null
-  @column({ columnName: 'faculty_id' })
+  @column()
   declare facultyId: string | null
   @column({ isPrimary: true })
   declare id: string
@@ -39,6 +39,33 @@ export class MajorSchema extends BaseModel {
   declare majorCode: string | null
   @column()
   declare majorName: string | null
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+}
+
+export class StudentSchema extends BaseModel {
+  static $columns = ['address', 'createdAt', 'dateOfBirth', 'deletedAt', 'gender', 'id', 'majorId', 'photo', 'studentName', 'uid', 'updatedAt'] as const
+  $columns = StudentSchema.$columns
+  @column()
+  declare address: string | null
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime | null
+  @column.date()
+  declare dateOfBirth: DateTime | null
+  @column.dateTime()
+  declare deletedAt: DateTime | null
+  @column()
+  declare gender: string
+  @column({ isPrimary: true })
+  declare id: string
+  @column()
+  declare majorId: string | null
+  @column()
+  declare photo: string | null
+  @column()
+  declare studentName: string | null
+  @column()
+  declare uid: string | null
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime | null
 }

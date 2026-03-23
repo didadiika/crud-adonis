@@ -1,0 +1,191 @@
+@pushTo('js-page-header')
+
+@endpushTo
+
+@pushTo('js-page-footer')
+<script src="{{ asset('bootstrap-admin-lte/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('bootstrap-admin-lte/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+<script src="{{ asset('bootstrap-admin-lte/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
+<script src="{{ asset('bootstrap-admin-lte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
+<script>
+$(document).ready(function() {
+  $('#datepicker').datepicker({
+      autoclose: true
+    })
+    
+  const table = $('#tabel').DataTable({
+      "language": {
+            "url": "{{ config('app.appUrl') }}/bootstrap-admin-lte/bower_components/datatables.net/Indonesian.json"
+        },
+        "processing": true,
+        "serverSide": true,
+        "order": [['0', 'asc']],
+        "ajax": {
+              url:"/master-data/mahasiswa/datatable/show",
+              type:"GET",
+        },
+        columns: [
+        { data: 'DT_RowIndex', orderable: false, searchable: false },
+        { data: 'major_name' },
+        { data: 'student_uid' },
+        { data: 'student_name' },
+        { data: 'student_gender' },
+        { data: 'student_date_of_birth' },
+        { data: 'student_address' },
+        { data: 'action', orderable: false, searchable: false }
+        ],
+    })
+    
+const limit = 10;
+$('[name = "faculty_id"]').select2({
+           minimumInputLength: 2,
+           multiple:false,
+           language: {
+  	        inputTooShort: function() {
+  		      return 'Ketik minimum 2 huruf';}
+                    },
+           allowClear: true,
+           placeholder:'Masukkan Nama Fakultas' ,
+           ajax: {
+              dataType:'json',
+              url:'/master-data/fakultas/search/data',
+              type:'GET',
+              delay: 250,
+              data: function(params) {
+                return {
+                  'search': params.term || "",
+                  'page': params.page || 1,
+                  'limit':limit
+                }
+              },
+              processResults: function (response, params) {
+              params.page = params.page || 1;
+             return {
+              results: response.data,
+              pagination:{ more:(params.page * limit) < response.meta.total_filtered }
+             };
+            },
+            cache: true
+          }
+          })
+
+/*----- Ketika Tombol Edit di Tabel Ditekan-------*/
+  $('#tabel').on('click','.item_edit',function(){
+    const id = $(this).attr('data-id');
+
+    $.ajax({
+      url:`/master-data/mahasiswa/${id}`,
+      method: 'GET',
+      success: function(data) {
+        $("#form-update").attr('action',`/master-data/mahasiswa/${id}`);
+        //var option = new Option(data.faculty.facultyName, data.facultyId, true, true);
+        //$('#form-update').find('[name="faculty_id"]').append(option).trigger('change');
+        $('#form-update').find('[name="name"]').val(data.studentName);
+        $('#modal-edit').modal('show');
+      },
+      error: function(err) {
+        alert('Gagal mengambil data!')
+        console.log(err)
+      }
+    })
+  })
+/*----- Ketika Tombol Edit di Tabel Ditekan-------*/
+
+/*----- Ketika Tombol Hapus di Tabel Ditekan-------*/
+$('#tabel').on('click','.item_hapus',function(){
+    const id = $(this).attr('data-id');
+    $.ajax({
+      url:`/master-data/mahasiswa/${id}`,
+      method: 'GET',
+      success: function(data) {
+        $("#form-hapus").attr('action',`/master-data/mahasiswa/${id}`);
+        $("#form-hapus").find("#nama-hapus").html(data.studentName);
+        $('#modal-hapus').modal('show');
+      },
+      error: function(err) {
+        alert('Gagal mengambil data!')
+        console.log(err)
+      }
+    })
+});
+/*----- Ketika Tombol Hapus di Tabel Ditekan-------*/
+
+
+
+$("#form-tambah").submit(function(e) {
+e.preventDefault(); // avoid to execute the actual submit of the form.
+const form = $(this);
+const actionUrl = form.attr('action');
+const method = form.attr('method');
+$.ajax({
+    type: method,
+    url: actionUrl,
+    data: form.serialize(), // serializes the form's elements.
+    success: function(data)
+    {
+      console.log('Submit Berhasil !');
+      location.reload();
+    },
+    error: function (data) {
+      console.log('Submit Error !'+form.serialize());
+    },
+});
+$("#form-tambah")[0].reset();
+$("#modal-input").modal('hide');
+
+})
+
+
+/*----- Ketika Form Update di Modal di Submit -------*/
+$("#form-update").submit(function(e) {
+e.preventDefault(); // avoid to execute the actual submit of the form.
+const form = $(this);
+const actionUrl = form.attr('action');
+const method = form.attr('method');
+$.ajax({
+    type: method,
+    url: actionUrl,
+    data: form.serialize(), // serializes the form's elements.
+    success: function(data)
+    {
+      console.log('Submit Berhasil !');
+      table.ajax.reload(null, false);
+    },
+    error: function (data) {
+      console.log('Submit Error !'+form.serialize());
+    },
+});
+$("#form-update")[0].reset();
+$("#modal-edit").modal('hide');
+
+})
+/*----- Ketika Form Update di Modal di Submit -------*/
+
+
+$("#form-hapus").submit(function(e) {
+  e.preventDefault(); // avoid to execute the actual submit of the form.
+  var form = $(this);
+  var actionUrl = form.attr('action');
+  var method = form.attr('method');
+  var formData = new FormData($(this)[0]);
+  $.ajax({
+          type: method,
+          url: actionUrl,
+          data:formData, // serializes the form's elements.
+          processData: false,
+          contentType: false,
+          success: function(data)
+          {
+            console.log('Submit Hapus Berhasil !');
+            location.reload();
+          },
+          error: function (data) {
+            console.log('Submit Error !');
+          },
+  });
+    $("#modal-hapus").modal('hide');
+});
+
+})
+</script>
+@endpushTo
