@@ -9,7 +9,7 @@
 $(document).ready(function() {
   const table = $('#tabel').DataTable({
       "language": {
-            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Indonesian.json"
+            "url": "{{ config('app.appUrl') }}/bootstrap-admin-lte/bower_components/datatables.net/Indonesian.json"
         },
         "processing": true,
         "serverSide": true,
@@ -79,7 +79,7 @@ $.ajax({
     success: function(data)
     {
       console.log('Submit Berhasil !');
-      table.ajax.reload(null, false);
+      location.reload();
     },
     error: function (data) {
       console.log('Submit Error !'+form.serialize());
@@ -131,7 +131,7 @@ $("#form-hapus").submit(function(e) {
           success: function(data)
           {
             console.log('Submit Hapus Berhasil !');
-            table.ajax.reload(null, false);
+            location.reload();
           },
           error: function (data) {
             console.log('Submit Error !');
