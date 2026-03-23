@@ -32,6 +32,10 @@ router.group(() => {
     router.resource('/master-data/jurusan', controllers.Jurusans)
     router.get('/master-data/jurusan/search/data', [controllers.Jurusans, 'search'])
     router.get('/master-data/jurusan/datatable/show', [controllers.Jurusans, 'datatable'])
+    router.get('/master-data/jurusan/:id/jurusan-per-fakultas', [
+      controllers.Jurusans,
+      'majors_of_faculty',
+    ])
     router.resource('/master-data/mahasiswa', controllers.Mahasiswas)
     router.get('/master-data/mahasiswa/datatable/show', [controllers.Mahasiswas, 'datatable'])
   }).middleware(middleware.auth())

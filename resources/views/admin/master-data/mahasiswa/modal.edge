@@ -1,5 +1,5 @@
 @pushTo('modal')
-{{-- Modal Input Data Jurusan --}}
+{{-- Modal Input Data Mahasiswa --}}
 <div class="modal fade" id="modal-input">
 <div class="modal-dialog">
 <div class="modal-content">
@@ -21,6 +21,7 @@
     <div id="tagNama" class="form-group">
         <label class="control-label" for="inputError"><i id="iconNama"></i> Pilih Jurusan</label>
         <select class="form-control" name="major_id" required>
+            <option value="">Pilih*</option>
         </select>
     </div>
 
@@ -38,7 +39,7 @@
 
     <div id="tagNama" class="form-group">
         <label class="control-label" for="inputError"><i id="iconNama"></i> Alamat</label>
-        <textarea class="form-control" required name="address"></textarea>
+        <textarea class="form-control" required name="address" placeholder="Alamat"></textarea>
         <span class="help-block" id="pesanNama"></span>
     </div>
 
@@ -49,8 +50,23 @@
         <div class="input-group-addon">
         <i class="fa fa-calendar"></i>
         </div>
-        <input type="text" class="form-control pull-right" id="datepicker">
+        <input type="text" class="form-control pull-right" id="datepicker" name="date_of_birth" data-date-format="dd-mm-yyyy">
     </div>
+    </div>
+
+    <div class="form-group">
+        <div class="radio">
+        <label>
+            <input type="radio" name="gender" id="gender1" value="L" checked>
+            Laki-laki
+        </label>
+        </div>
+        <div class="radio">
+        <label>
+            <input type="radio" name="gender" id="gender2" value="P">
+            Perempuan
+        </label>
+        </div>
     </div>
 
 </div>
@@ -62,17 +78,17 @@
 </div>
 </div>
 </div>
-{{-- Modal Input Data Jurusan --}}
+{{-- Modal Input Data Mahasiswa --}}
 
 
-{{-- Modal Edit Data Jurusan --}}
+{{-- Modal Edit Data Mahasiswa --}}
 <div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 <div class="modal-dialog" role="document">
 <div class="modal-content">
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 <span aria-hidden="true">&times;</span></button>
-<h4 class="modal-title" id="myModalLabel">Form Edit Jurusan</h4>
+<h4 class="modal-title" id="myModalLabel">Form Edit Mahasiswa</h4>
 </div>
 
 <form action="" method="PUT" id="form-update">
@@ -87,9 +103,54 @@
     </div>
 
     <div id="tagNama" class="form-group">
-        <label class="control-label" for="inputError"><i id="iconNama"></i> Nama Jurusan</label>
-        <input type="text" name="name" class="form-control" placeholder="Nama Jurusan" required>
+        <label class="control-label" for="inputError"><i id="iconNama"></i> Pilih Jurusan</label>
+        <select class="form-control" name="major_id" required>
+            <option value="">Pilih*</option>
+        </select>
+    </div>
+
+    <div id="tagNama" class="form-group">
+        <label class="control-label" for="inputError"><i id="iconNama"></i> NIM</label>
+        <input type="text" name="uid" class="form-control" placeholder="NIM" required>
         <span class="help-block" id="pesanNama"></span>
+    </div>
+
+    <div id="tagNama" class="form-group">
+        <label class="control-label" for="inputError"><i id="iconNama"></i> Nama Mahasiswa</label>
+        <input type="text" name="name" class="form-control" placeholder="Nama" required>
+        <span class="help-block" id="pesanNama"></span>
+    </div>
+
+    <div id="tagNama" class="form-group">
+        <label class="control-label" for="inputError"><i id="iconNama"></i> Alamat</label>
+        <textarea class="form-control" required name="address" placeholder="Alamat"></textarea>
+        <span class="help-block" id="pesanNama"></span>
+    </div>
+
+    <div class="form-group">
+    <label>Tanggal Lahir:</label>
+
+    <div class="input-group date">
+        <div class="input-group-addon">
+        <i class="fa fa-calendar"></i>
+        </div>
+        <input type="text" class="form-control pull-right" id="datepicker">
+    </div>
+    </div>
+
+    <div class="form-group">
+        <div class="radio">
+        <label>
+            <input type="radio" name="gender" id="gender1" value="L">
+            Laki-laki
+        </label>
+        </div>
+        <div class="radio">
+        <label>
+            <input type="radio" name="gender" id="gender2" value="P">
+            Perempuan
+        </label>
+        </div>
     </div>
 
 </div>
@@ -101,17 +162,17 @@
 </div>
 </div>
 </div> 
-{{-- Modal Edit Data Jurusan --}}
+{{-- Modal Edit Data Mahasiswa --}}
 
 
-{{-- Modal Hapus Data Fakultas --}}
+{{-- Modal Hapus Data Mahasiswa --}}
 <div class="modal modal-danger fade" id="modal-hapus" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 <div class="modal-dialog" role="document">
 <div class="modal-content">
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 <span aria-hidden="true">&times;</span></button>
-    <h4 class="modal-title" id="myModalLabel">Hapus Fakultas</h4>
+    <h4 class="modal-title" id="myModalLabel">Hapus Mahasiswa</h4>
 </div>
 <form class="form-horizontal" method="DELETE" action="" id="form-hapus">
 {{ csrfField() }}
@@ -129,7 +190,7 @@
 </div>
 </div>
 </div>
-{{-- Modal Hapus Data Fakultas --}}
+{{-- Modal Hapus Data Mahasiswa --}}
 
 
 

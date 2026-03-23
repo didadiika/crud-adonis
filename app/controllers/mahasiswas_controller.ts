@@ -2,6 +2,7 @@ import type { HttpContext } from '@adonisjs/core/http'
 import Student from '#models/student'
 import { v4 as uuidv4 } from 'uuid'
 import Database from '@adonisjs/lucid/services/db'
+import { DateTime } from 'luxon'
 
 export default class MahasiswasController {
   /**
@@ -28,7 +29,7 @@ export default class MahasiswasController {
    * Handle form submission for the create action
    */
   async store({ request, response }: HttpContext) {
-    const { major_id, student_name, uid, date_of_birth, address, gender } = request.only([
+    const { major_id, name, uid, date_of_birth, address, gender } = request.only([
       'major_id',
       'name',
       'uid',
@@ -42,8 +43,8 @@ export default class MahasiswasController {
         id: id,
         majorId: major_id,
         uid: uid,
-        studentName: student_name,
-        dateOfBirth: date_of_birth,
+        studentName: name,
+        dateOfBirth: DateTime.fromFormat(date_of_birth, 'dd-MM-yyyy').toFormat('yyyy-MM-dd'),
         address: address,
         gender: gender,
        })

@@ -212,4 +212,17 @@ export default class JurusansController {
         data: result
       })
     }
+
+    async majors_of_faculty({ params, response }: HttpContext){
+      const { id } = params
+      try {
+        const majors = await Major.query().where('faculty_id', id).orderBy('major_name','asc').whereNull('deleted_at').select('id', 'major_name')
+        
+        return response.status(200).json(majors)
+      } catch (error) {
+        return response.status(500).json({ error: 'Internal Server Error' })
+      }
+      
+      
+    }
 }

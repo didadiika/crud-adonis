@@ -26,6 +26,7 @@ export type ScannedRoutes = {
     'master_data_jurusan.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'jurusans.search': { paramsTuple?: []; params?: {} }
     'jurusans.datatable': { paramsTuple?: []; params?: {} }
+    'jurusans.majors_of_faculty': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'master_data_mahasiswa.index': { paramsTuple?: []; params?: {} }
     'master_data_mahasiswa.create': { paramsTuple?: []; params?: {} }
     'master_data_mahasiswa.store': { paramsTuple?: []; params?: {} }
@@ -58,6 +59,7 @@ export type ScannedRoutes = {
     'master_data_jurusan.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'jurusans.search': { paramsTuple?: []; params?: {} }
     'jurusans.datatable': { paramsTuple?: []; params?: {} }
+    'jurusans.majors_of_faculty': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'master_data_mahasiswa.index': { paramsTuple?: []; params?: {} }
     'master_data_mahasiswa.create': { paramsTuple?: []; params?: {} }
     'master_data_mahasiswa.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
@@ -84,6 +86,7 @@ export type ScannedRoutes = {
     'master_data_jurusan.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'jurusans.search': { paramsTuple?: []; params?: {} }
     'jurusans.datatable': { paramsTuple?: []; params?: {} }
+    'jurusans.majors_of_faculty': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'master_data_mahasiswa.index': { paramsTuple?: []; params?: {} }
     'master_data_mahasiswa.create': { paramsTuple?: []; params?: {} }
     'master_data_mahasiswa.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }

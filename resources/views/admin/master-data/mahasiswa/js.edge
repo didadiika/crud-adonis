@@ -69,6 +69,35 @@ $('[name = "faculty_id"]').select2({
           }
           })
 
+$("#form-tambah").find('[name = "faculty_id"]').on('select2:select', function (e) {
+  const faculty_id = $("#form-tambah").find('[name = "faculty_id"]').val();
+  $.ajax({
+      url:`/master-data/jurusan/${faculty_id}/jurusan-per-fakultas`,
+      method: 'GET',
+      success: function(data) {
+        
+        let majorSelect = $("#form-tambah").find('[name="major_id"]')
+
+        // kosongkan dulu option lama
+        majorSelect.empty()
+
+        // option default
+        majorSelect.append(`<option value="">Pilih*</option>`)
+
+        // looping data dari backend
+        data.forEach(item => {
+          majorSelect.append(`
+            <option value="${item.id}">${item.majorName}</option>
+          `)
+        })
+      },
+      error: function(err) {
+        alert('Gagal mengambil data!')
+        console.log(err)
+      }
+    })
+});
+
 /*----- Ketika Tombol Edit di Tabel Ditekan-------*/
   $('#tabel').on('click','.item_edit',function(){
     const id = $(this).attr('data-id');
