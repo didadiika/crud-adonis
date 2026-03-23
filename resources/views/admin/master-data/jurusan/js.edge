@@ -1,17 +1,57 @@
+@pushTo('js-page-header')
+
+@endpushTo
+
 @pushTo('js-page-footer')
+<script src="{{ asset('bootstrap-admin-lte/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
+
 <script>
 $(document).ready(function() {
+const limit = 10;
+$('[name = "faculty_id"]').select2({
+           minimumInputLength: 2,
+           multiple:false,
+           language: {
+  	        inputTooShort: function() {
+  		      return 'Ketik minimum 2 huruf';}
+                    },
+           allowClear: true,
+           placeholder:'Masukkan Nama Fakultas' ,
+           ajax: {
+              dataType:'json',
+              url:'/master-data/fakultas/search/data',
+              type:'GET',
+              delay: 250,
+              data: function(params) {
+                return {
+                  'search': params.term || "",
+                  'page': params.page || 1,
+                  'limit':limit
+                }
+              },
+              processResults: function (response, params) {
+              params.page = params.page || 1;
+             return {
+              results: response.data,
+              pagination:{ more:(params.page * limit) < response.meta.total_filtered }
+             };
+            },
+            cache: true
+          }
+          })
 
 /*----- Ketika Tombol Edit di Tabel Ditekan-------*/
   $('#tabel').on('click','.item_edit',function(){
     const id = $(this).attr('data-id');
 
     $.ajax({
-      url:`/master-data/fakultas/${id}`,
+      url:`/master-data/jurusan/${id}`,
       method: 'GET',
       success: function(data) {
-        $("#form-update").attr('action',`/master-data/fakultas/${id}`);
-        $('#form-update').find('[name="name"]').val(data.facultyName);
+        $("#form-update").attr('action',`/master-data/jurusan/${id}`);
+        var option = new Option(data.faculty.facultyName, data.facultyId, true, true);
+        $('#form-update').find('[name="faculty_id"]').append(option).trigger('change');
+        $('#form-update').find('[name="name"]').val(data.majorName);
         $('#modal-edit').modal('show');
       },
       error: function(err) {
@@ -26,11 +66,11 @@ $(document).ready(function() {
 $('#tabel').on('click','.item_hapus',function(){
     const id = $(this).attr('data-id');
     $.ajax({
-      url:`/master-data/fakultas/${id}`,
+      url:`/master-data/jurusan/${id}`,
       method: 'GET',
       success: function(data) {
-        $("#form-hapus").attr('action',`/master-data/fakultas/${id}`);
-        $("#form-hapus").find("#nama-hapus").html(data.facultyName);
+        $("#form-hapus").attr('action',`/master-data/jurusan/${id}`);
+        $("#form-hapus").find("#nama-hapus").html(data.majorName);
         $('#modal-hapus').modal('show');
       },
       error: function(err) {

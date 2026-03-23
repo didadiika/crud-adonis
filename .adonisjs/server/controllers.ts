@@ -6,6 +6,7 @@
 export const controllers = {
   Dashboard: () => import('#controllers/dashboard_controller'),
   Fakultas: () => import('#controllers/fakultas_controller'),
+  Jurusans: () => import('#controllers/jurusans_controller'),
   Login: () => import('#controllers/login_controller'),
   NewAccount: () => import('#controllers/new_account_controller'),
   Posts: () => import('#controllers/posts_controller'),

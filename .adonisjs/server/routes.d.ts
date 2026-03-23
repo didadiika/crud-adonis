@@ -15,6 +15,14 @@ export type ScannedRoutes = {
     'master_data_fakultas.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'master_data_fakultas.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'master_data_fakultas.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'fakultas.search': { paramsTuple?: []; params?: {} }
+    'master_data_jurusan.index': { paramsTuple?: []; params?: {} }
+    'master_data_jurusan.create': { paramsTuple?: []; params?: {} }
+    'master_data_jurusan.store': { paramsTuple?: []; params?: {} }
+    'master_data_jurusan.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'master_data_jurusan.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'master_data_jurusan.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'master_data_jurusan.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'users.index': { paramsTuple?: []; params?: {} }
     'users.store': { paramsTuple?: []; params?: {} }
     'users.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
@@ -31,6 +39,11 @@ export type ScannedRoutes = {
     'master_data_fakultas.create': { paramsTuple?: []; params?: {} }
     'master_data_fakultas.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'master_data_fakultas.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'fakultas.search': { paramsTuple?: []; params?: {} }
+    'master_data_jurusan.index': { paramsTuple?: []; params?: {} }
+    'master_data_jurusan.create': { paramsTuple?: []; params?: {} }
+    'master_data_jurusan.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'master_data_jurusan.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'users.index': { paramsTuple?: []; params?: {} }
     'users.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'users.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
@@ -44,6 +57,11 @@ export type ScannedRoutes = {
     'master_data_fakultas.create': { paramsTuple?: []; params?: {} }
     'master_data_fakultas.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'master_data_fakultas.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'fakultas.search': { paramsTuple?: []; params?: {} }
+    'master_data_jurusan.index': { paramsTuple?: []; params?: {} }
+    'master_data_jurusan.create': { paramsTuple?: []; params?: {} }
+    'master_data_jurusan.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'master_data_jurusan.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'users.index': { paramsTuple?: []; params?: {} }
     'users.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'users.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
@@ -52,17 +70,21 @@ export type ScannedRoutes = {
   POST: {
     'login.auth': { paramsTuple?: []; params?: {} }
     'master_data_fakultas.store': { paramsTuple?: []; params?: {} }
+    'master_data_jurusan.store': { paramsTuple?: []; params?: {} }
     'users.store': { paramsTuple?: []; params?: {} }
   }
   PUT: {
     'master_data_fakultas.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'master_data_jurusan.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'users.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
   PATCH: {
     'master_data_fakultas.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'master_data_jurusan.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
   DELETE: {
     'master_data_fakultas.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'master_data_jurusan.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'users.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
 }

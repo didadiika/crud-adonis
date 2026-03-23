@@ -7,9 +7,9 @@
 import { BaseModel, column } from '@adonisjs/lucid/orm'
 import { DateTime } from 'luxon'
 
-export class FacultiesSchema extends BaseModel {
+export class FacultySchema extends BaseModel {
   static $columns = ['createdAt', 'deletedAt', 'facultyCode', 'facultyName', 'id', 'updatedAt'] as const
-  $columns = FacultiesSchema.$columns
+  $columns = FacultySchema.$columns
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime | null
   @column.dateTime()
@@ -20,6 +20,25 @@ export class FacultiesSchema extends BaseModel {
   declare facultyName: string | null
   @column({ isPrimary: true })
   declare id: string
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+}
+
+export class MajorSchema extends BaseModel {
+  static $columns = ['createdAt', 'deletedAt', 'facultyId', 'id', 'majorCode', 'majorName', 'updatedAt'] as const
+  $columns = MajorSchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime | null
+  @column.dateTime()
+  declare deletedAt: DateTime | null
+  @column()
+  declare facultyId: string | null
+  @column({ isPrimary: true })
+  declare id: string
+  @column()
+  declare majorCode: string | null
+  @column()
+  declare majorName: string | null
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime | null
 }

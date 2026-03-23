@@ -24,16 +24,15 @@ router.post('/login/auth', [controllers.Login, 'auth'])
 
 // Router dengan Login dahulu baru bisa akses dashboard dan logout
 router.group(() => {
-      router.get('/dashboard', [controllers.Dashboard, 'index'])
-      router.get('/logout', [controllers.Login, 'logout'])
-      router.resource('/master-data/fakultas', controllers.Fakultas)
-      }).middleware(middleware.auth())
+    router.get('/dashboard', [controllers.Dashboard, 'index'])
+    router.get('/logout', [controllers.Login, 'logout'])
+    router.resource('/master-data/fakultas', controllers.Fakultas)
+    router.get('/master-data/fakultas/search/data', [controllers.Fakultas, 'search'])
+    router.resource('/master-data/jurusan', controllers.Jurusans)
+  }).middleware(middleware.auth())
 
 
-
-
-      
-router.get('/users', [controllers.Users, 'index'])
+  router.get('/users', [controllers.Users, 'index'])
 router.post('/users', [controllers.Users, 'store'])
 router.get('/users/:id', [controllers.Users, 'show'])
 router.get('/users/:id/edit', [controllers.Users, 'edit'])

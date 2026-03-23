@@ -6,6 +6,8 @@ export default class extends BaseSchema {
   async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.engine('MyISAM')
+      table.charset('utf8mb4')
+      table.collate('utf8mb4_unicode_ci')
       table.uuid('id').primary()
       table.text('faculty_code').nullable().defaultTo(null)
       table.text('faculty_name').nullable().defaultTo(null)

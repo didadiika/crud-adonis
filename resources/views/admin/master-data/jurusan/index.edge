@@ -2,21 +2,21 @@
 @component('admin/layouts/main', { segments:segments })
 
   @slot('title')
-    Fakultas
+    Jurusan
   @endslot
 
 @endcomponent
 
-@include('admin/master-data/fakultas/css')
-@include('admin/master-data/fakultas/js')
-@include('admin/master-data/fakultas/modal')
+@include('admin/master-data/jurusan/css')
+@include('admin/master-data/jurusan/js')
+@include('admin/master-data/jurusan/modal')
 
 @pushTo('content')
 <section class="content-header">
-      <h1>Fakultas</h1>
+      <h1>Jurusan</h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-navicon"></i> Master Data</a></li>
-        <li class="active">Fakultas</li>
+        <li class="active">Jurusan</li>
       </ol>
 </section>
 
@@ -26,33 +26,36 @@
 </a>
 
 <div class="box">
+  <!--Tombol Tambah Data-->
 
             <div class="box-header">
-              <h3 class="box-title">Daftar Fakultas</h3>
+              <h3 class="box-title">Daftar Jurusan</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-@if(faculties.length > 0)
+@if(majors.length > 0)
               <div class="table-responsive">
               <table id="tabel" class="table table-bordered table-striped">
                 <thead>
                 <tr>
                   <th>No</th>
-                  <th>Kode Fakultas</th>
-                  <th>Nama Fakultas</th>
+                  <th>Kode Jurusan</th>
+                  <th>Fakultas</th>
+                  <th>Nama Jurusan</th>
                   <th>Aksi</th>
                 </tr>
                 </thead>
                 <tbody>
-                @each((faculty, index) in faculties)
+                @each((major, index) in majors)
                   <tr>
-                    <td>{{ index + 1}}</td>
-                    <td>{{ faculty.facultyCode || '' }}</td>
-                    <td>{{ faculty.facultyName }}</td>
+                    <td>{{ index + 1 }}</td>
+                    <td>{{ major.majorCode || '' }}</td>
+                    <td>{{ major.faculty.facultyName }}</td>
+                    <td>{{ major.majorName }}</td>
                     <td>
-            <a class="btn btn-sm btn-warning item_edit" href="javascript:void(0)" title="Edit" data-id="{{ faculty.id }}">
+            <a class="btn btn-sm btn-warning item_edit" href="javascript:void(0)" title="Edit" data-id="{{ major.id }}">
             <i class="fa fa-pencil"></i> Edit</a>
-            <a href="javascript:;" class="btn btn-sm btn-danger item_hapus" data-id="{{ faculty.id }}">
+            <a href="javascript:;" class="btn btn-sm btn-danger item_hapus" data-id="{{ major.id }}">
             <i class="fa fa-trash"></i> Hapus</a></td>
                   </tr>
                 @end

@@ -6,9 +6,11 @@ export default class FakultasController {
   /**
    * Display a list of resource
    */
-  async index({ view, response }: HttpContext) {
+  async index({ view, response, request }: HttpContext) {
     const faculties = await Faculties.query().orderBy('created_at','desc').whereNull('deleted_at')
-    return view.render('admin/master-data/fakultas/index',{ faculties })
+    const url = request.url()
+    const segments = url.split('/').filter(Boolean)
+    return view.render('admin/master-data/fakultas/index', { faculties, segments })
     //return response.status(200).json(faculties)
   }
 
@@ -88,5 +90,50 @@ export default class FakultasController {
       console.error('Error deleting user:', error)
       return response.status(500).json({ error: 'Internal Server Error' })
     }
+  }
+
+  async search({ response, request }: HttpContext) {
+    const search = request.input('search', '').trim()
+    const page = request.input('page')
+    const limit = request.input('limit')
+    const offset = limit * (page - 1)
+    try {
+      const data = await Faculties.query()
+      .whereRaw('faculty_name LIKE ? COLLATE utf8mb4_general_ci', [`%${search}%`])
+      .orderBy('faculty_name', 'asc')
+      .whereNull('deleted_at')
+      .forPage(page, limit)
+
+      const totalResult = await Faculties.query()
+      .whereNull('deleted_at')
+      .count('* as total')
+
+      // Count data setelah filter
+      const filteredResult = await Faculties.query()
+      .whereRaw('faculty_name LIKE ? COLLATE utf8mb4_general_ci', [`%${search}%`])
+      .whereNull('deleted_at')
+      .count('* as total')
+
+      const total = Number(totalResult[0].$extras.total)
+      const filtered = Number(filteredResult[0].$extras.total)
+      const mappedData = data.map((item) => ({
+        id: item.id,
+        text: item.facultyName
+      }))
+      return response.status(200).json({
+      data: mappedData,
+      meta: {
+        total: total,            // jumlah semua data
+        total_filtered: filtered, // jumlah data setelah filter
+        page: page,
+        limit: limit
+      }
+      })
+    } catch (error) {
+        return response.status(400).json({
+          error: 'Failed to search data',
+          detail: error.message
+        })
+      }
   }
 }

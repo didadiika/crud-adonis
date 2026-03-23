@@ -18,7 +18,7 @@
         <li class="header">MENU UTAMA</li>
         <!--Menu Utama-->
 
-        <li class="treeview">
+        <li class="treeview {{ segments[0] == 'master-data' ? 'active' : '' }}">
           <a href="#">
             <i class="fa fa-navicon"></i>
             <span>Master Data</span>
@@ -27,9 +27,9 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="/master-data/fakultas"><i class="fa fa-circle-o"></i> Data Fakultas</a></li>
-            <li><a href="/master-data/jurusan"><i class="fa fa-circle-o"></i> Data Jurusan</a></li>
-            <li><a href="/master-data/mahasiswa"><i class="fa fa-circle-o"></i> Data Mahasiswa</a></li>
+            <li class="{{ segments[1] == 'fakultas' ? 'active' : '' }}"><a href="/master-data/fakultas"><i class="fa {{ segments[1] == 'fakultas' ? 'fa-circle' : 'fa-circle-o' }}"></i> Data Fakultas</a></li>
+            <li class="{{ segments[1] == 'jurusan' ? 'active' : '' }}"><a href="/master-data/jurusan"><i class="fa {{ segments[1] == 'jurusan' ? 'fa-circle' : 'fa-circle-o' }}"></i> Data Jurusan</a></li>
+            <li class="{{ segments[1] == 'mahasiswa' ? 'active' : '' }}"><a href="/master-data/mahasiswa"><i class="fa {{ segments[1] == 'mahasiswa' ? 'fa-circle' : 'fa-circle-o' }}"></i> Data Mahasiswa</a></li>
           </ul>
         </li>
         
