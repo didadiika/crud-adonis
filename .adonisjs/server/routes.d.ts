@@ -16,6 +16,7 @@ export type ScannedRoutes = {
     'master_data_fakultas.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'master_data_fakultas.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'fakultas.search': { paramsTuple?: []; params?: {} }
+    'fakultas.datatable': { paramsTuple?: []; params?: {} }
     'master_data_jurusan.index': { paramsTuple?: []; params?: {} }
     'master_data_jurusan.create': { paramsTuple?: []; params?: {} }
     'master_data_jurusan.store': { paramsTuple?: []; params?: {} }
@@ -23,6 +24,7 @@ export type ScannedRoutes = {
     'master_data_jurusan.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'master_data_jurusan.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'master_data_jurusan.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'jurusans.datatable': { paramsTuple?: []; params?: {} }
     'users.index': { paramsTuple?: []; params?: {} }
     'users.store': { paramsTuple?: []; params?: {} }
     'users.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
@@ -40,10 +42,12 @@ export type ScannedRoutes = {
     'master_data_fakultas.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'master_data_fakultas.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'fakultas.search': { paramsTuple?: []; params?: {} }
+    'fakultas.datatable': { paramsTuple?: []; params?: {} }
     'master_data_jurusan.index': { paramsTuple?: []; params?: {} }
     'master_data_jurusan.create': { paramsTuple?: []; params?: {} }
     'master_data_jurusan.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'master_data_jurusan.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'jurusans.datatable': { paramsTuple?: []; params?: {} }
     'users.index': { paramsTuple?: []; params?: {} }
     'users.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'users.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
@@ -58,10 +62,12 @@ export type ScannedRoutes = {
     'master_data_fakultas.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'master_data_fakultas.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'fakultas.search': { paramsTuple?: []; params?: {} }
+    'fakultas.datatable': { paramsTuple?: []; params?: {} }
     'master_data_jurusan.index': { paramsTuple?: []; params?: {} }
     'master_data_jurusan.create': { paramsTuple?: []; params?: {} }
     'master_data_jurusan.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'master_data_jurusan.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'jurusans.datatable': { paramsTuple?: []; params?: {} }
     'users.index': { paramsTuple?: []; params?: {} }
     'users.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'users.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }

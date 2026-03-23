@@ -31,7 +31,7 @@ export class MajorSchema extends BaseModel {
   declare createdAt: DateTime | null
   @column.dateTime()
   declare deletedAt: DateTime | null
-  @column()
+  @column({ columnName: 'faculty_id' })
   declare facultyId: string | null
   @column({ isPrimary: true })
   declare id: string

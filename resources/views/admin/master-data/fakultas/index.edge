@@ -44,18 +44,6 @@
                 </tr>
                 </thead>
                 <tbody>
-                @each((faculty, index) in faculties)
-                  <tr>
-                    <td>{{ index + 1}}</td>
-                    <td>{{ faculty.facultyCode || '' }}</td>
-                    <td>{{ faculty.facultyName }}</td>
-                    <td>
-            <a class="btn btn-sm btn-warning item_edit" href="javascript:void(0)" title="Edit" data-id="{{ faculty.id }}">
-            <i class="fa fa-pencil"></i> Edit</a>
-            <a href="javascript:;" class="btn btn-sm btn-danger item_hapus" data-id="{{ faculty.id }}">
-            <i class="fa fa-trash"></i> Hapus</a></td>
-                  </tr>
-                @end
                 </tbody>
               </table>
             </div>

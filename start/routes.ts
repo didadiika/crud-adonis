@@ -28,8 +28,11 @@ router.group(() => {
     router.get('/logout', [controllers.Login, 'logout'])
     router.resource('/master-data/fakultas', controllers.Fakultas)
     router.get('/master-data/fakultas/search/data', [controllers.Fakultas, 'search'])
+    router.get('/master-data/fakultas/datatable/show', [controllers.Fakultas, 'datatable'])
     router.resource('/master-data/jurusan', controllers.Jurusans)
+    router.get('/master-data/jurusan/datatable/show', [controllers.Jurusans, 'datatable'])
   }).middleware(middleware.auth())
+  
 
 
   router.get('/users', [controllers.Users, 'index'])

@@ -1,6 +1,30 @@
+@pushTo('js-page-header')
+
+@endpushTo
+
 @pushTo('js-page-footer')
+<script src="{{ asset('bootstrap-admin-lte/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('bootstrap-admin-lte/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
 <script>
 $(document).ready(function() {
+  const table = $('#tabel').DataTable({
+      "language": {
+            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Indonesian.json"
+        },
+        "processing": true,
+        "serverSide": true,
+        "order": [['0', 'asc']],
+        "ajax": {
+              url:"/master-data/fakultas/datatable/show",
+              type:"GET",
+        },
+        columns: [
+        { data: 'DT_RowIndex', orderable: false, searchable: false },
+        { data: 'faculty_code' },
+        { data: 'faculty_name' },
+        { data: 'action', orderable: false, searchable: false }
+        ],
+    })
 
 /*----- Ketika Tombol Edit di Tabel Ditekan-------*/
   $('#tabel').on('click','.item_edit',function(){
@@ -43,6 +67,28 @@ $('#tabel').on('click','.item_hapus',function(){
 
 
 
+$("#form-tambah").submit(function(e) {
+e.preventDefault(); // avoid to execute the actual submit of the form.
+const form = $(this);
+const actionUrl = form.attr('action');
+const method = form.attr('method');
+$.ajax({
+    type: method,
+    url: actionUrl,
+    data: form.serialize(), // serializes the form's elements.
+    success: function(data)
+    {
+      console.log('Submit Berhasil !');
+      table.ajax.reload(null, false);
+    },
+    error: function (data) {
+      console.log('Submit Error !'+form.serialize());
+    },
+});
+$("#form-tambah")[0].reset();
+$("#modal-input").modal('hide');
+
+})
 
 /*----- Ketika Form Update di Modal di Submit -------*/
 $("#form-update").submit(function(e) {
@@ -57,8 +103,7 @@ $.ajax({
     success: function(data)
     {
       console.log('Submit Berhasil !');
-      //table.ajax.reload(null, false);
-      location.reload();
+      table.ajax.reload(null, false);
     },
     error: function (data) {
       console.log('Submit Error !'+form.serialize());
@@ -86,13 +131,13 @@ $("#form-hapus").submit(function(e) {
           success: function(data)
           {
             console.log('Submit Hapus Berhasil !');
-            location.reload();
+            table.ajax.reload(null, false);
           },
           error: function (data) {
             console.log('Submit Error !');
           },
   });
-    $("#ModalHapus").modal('hide');
+    $('#modal-hapus').modal('hide');
 });
 
 })

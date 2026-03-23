@@ -136,4 +136,58 @@ export default class FakultasController {
         })
       }
   }
+
+  async datatable({ request, response }: HttpContext) {
+    const start = Number(request.input('start', 0))
+    const length = request.input('length', 10)
+    const search = request.input('search.value', '')
+
+    // Query dasar
+    let query = Faculties.query().whereNull('deleted_at')
+
+    // 🔍 MULTI FIELD SEARCH
+    if (search) {
+      query = query.where((builder) => {
+        builder
+          .whereILike('faculty_name', `%${search}%`)
+          .orWhereILike('faculty_code', `%${search}%`)
+      })
+    }
+
+    // Total data tanpa filter
+    const recordsTotal = await Faculties.query()
+      .whereNull('deleted_at')
+      .count('* as total')
+      .first()
+
+    // Total setelah filter
+    const recordsFiltered = await query.clone().count('* as total').first()
+
+    // Ambil data dengan pagination
+    const data = await query
+      .orderBy('faculty_name', 'asc')
+      .offset(start)
+      .limit(length)
+
+    // Format data ke DataTables
+    const result = data.map((item, index) => {
+      return {
+        DT_RowIndex: start + index + 1,
+        id: item.id,
+        faculty_code: item.facultyCode || '',
+        faculty_name: item.facultyName,
+        action: `
+          <button class="btn btn-sm btn-warning item_edit" data-id="${item.id}">Edit</button>
+          <button href="javascript:;" class="btn btn-sm btn-danger item_hapus" data-id="${item.id}">Delete</button>
+        `
+      }
+    })
+
+    return response.json({
+      draw: request.input('draw'),
+      recordsTotal: recordsTotal?.$extras.total || 0,
+      recordsFiltered: recordsFiltered?.$extras.total || 0,
+      data: result
+    })
+  }
 }

@@ -46,19 +46,6 @@
                 </tr>
                 </thead>
                 <tbody>
-                @each((major, index) in majors)
-                  <tr>
-                    <td>{{ index + 1 }}</td>
-                    <td>{{ major.majorCode || '' }}</td>
-                    <td>{{ major.faculty.facultyName }}</td>
-                    <td>{{ major.majorName }}</td>
-                    <td>
-            <a class="btn btn-sm btn-warning item_edit" href="javascript:void(0)" title="Edit" data-id="{{ major.id }}">
-            <i class="fa fa-pencil"></i> Edit</a>
-            <a href="javascript:;" class="btn btn-sm btn-danger item_hapus" data-id="{{ major.id }}">
-            <i class="fa fa-trash"></i> Hapus</a></td>
-                  </tr>
-                @end
                 </tbody>
               </table>
             </div>

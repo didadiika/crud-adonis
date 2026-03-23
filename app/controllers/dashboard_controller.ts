@@ -4,9 +4,10 @@ export default class DashboardController {
   /**
    * Display a list of resource
    */
-  async index({ view }: HttpContext) {
-
-    return view.render('admin/dashboard')
+  async index({ view, request }: HttpContext) {
+    const url = request.url()
+    const segments = url.split('/').filter(Boolean)
+    return view.render('admin/dashboard', { segments })
   }
 
   /**

@@ -1,6 +1,7 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Major from '#models/major'
 import { v4 as uuidv4 } from 'uuid'
+import Database from '@adonisjs/lucid/services/db'
 
 export default class JurusansController {
   /**
@@ -94,4 +95,70 @@ export default class JurusansController {
       return response.status(500).json({ error: 'Internal Server Error' })
     }
   }
+
+  async datatable({ request, response }: HttpContext) {
+      const start = Number(request.input('start', 0))
+      const length = request.input('length', 10)
+      const search = request.input('search.value', '')
+  
+      // Query dasar
+    let query = Database.from('majors')
+            .innerJoin('faculties', 'majors.faculty_id', 'faculties.id')
+            .whereNull('majors.deleted_at')
+  
+      // 🔍 MULTI FIELD SEARCH
+      if (search) {
+        query = query.where((builder) => {
+          builder
+          .whereILike('majors.major_code', `%${search}%`)
+          .orWhereILike('majors.major_name', `%${search}%`)
+          .orWhereILike('faculties.faculty_name', `%${search}%`)
+      })
+    }
+
+    // Total data tanpa filter
+      const totalResult = await Database
+      .from('majors')
+      .whereNull('deleted_at')
+      .count('* as total')
+      const recordsTotal = Number(totalResult[0]?.total || 0)
+  
+      // Total setelah filter
+      const filteredResult = await query.clone().count('* as total')
+      const recordsFiltered = Number(filteredResult[0]?.total || 0)
+  
+      // Ambil data dengan pagination
+      const data = await query
+                .select(
+                'majors.id',
+                'majors.major_code',
+                'majors.major_name',
+                'faculties.faculty_name'
+              )
+              .orderBy('majors.major_name', 'asc')
+              .offset(start)
+              .limit(length)
+  
+      // Format data ke DataTables
+      const result = data.map((item, index) => {
+        return {
+          DT_RowIndex: start + index + 1,
+          id: item.id,
+          major_code: item.major_code || '',
+          faculty_name: item.faculty_name,
+          major_name: item.major_name,
+          action: `
+            <button class="btn btn-sm btn-warning item_edit" data-id="${item.id}">Edit</button>
+            <button href="javascript:;" class="btn btn-sm btn-danger item_hapus" data-id="${item.id}">Delete</button>
+          `
+        }
+      })
+  
+      return response.json({
+        draw: Number(request.input('draw', 1)),
+        recordsTotal,
+        recordsFiltered,
+        data: result
+      })
+    }
 }
