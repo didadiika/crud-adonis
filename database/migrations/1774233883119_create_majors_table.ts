@@ -9,13 +9,17 @@ export default class extends BaseSchema {
       table.charset('utf8mb4')
       table.collate('utf8mb4_unicode_ci')
       table.uuid('id').primary()
-      table.uuid('faculty_id').index().references('faculties.id')
+      table.uuid('faculty_id')
       table.text('major_code').nullable().defaultTo(null)
       table.text('major_name').nullable().defaultTo(null)
 
       table.timestamp('created_at', { useTz: true }).defaultTo(this.now())
       table.timestamp('updated_at', { useTz: true }).nullable().defaultTo(null)
       table.timestamp('deleted_at', { useTz: true }).nullable().defaultTo(null)
+    })
+    
+    this.schema.alterTable('majors', (table) => {
+    table.foreign('faculty_id').references('faculties.id')
     })
   }
 

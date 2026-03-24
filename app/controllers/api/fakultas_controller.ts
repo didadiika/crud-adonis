@@ -1,6 +1,6 @@
 import Faculties from '#models/faculties'
 import { v4 as uuidv4 } from 'uuid'
-import { HttpContext } from '@adonisjs/core/http'
+import { type HttpContext } from '@adonisjs/core/http'
 
 export default class FakultasController {
   /**
@@ -10,16 +10,17 @@ export default class FakultasController {
     const limit = request.input('limit')
     const page = request.input('page')
 
-      let query = Faculties
-          .query()
-          .orderBy('created_at', 'desc')
-          .whereNull('deleted_at')
+    let query = Faculties.query().orderBy('created_at', 'desc').whereNull('deleted_at')
 
-        if (limit && page) {
-          query = query.forPage(page, limit)
-        }
-      const faculties = await query
-    return response.status(200).json(faculties)
+    if (limit && page) {
+      query = query.forPage(page, limit)
+    }
+    const faculties = await query
+    return response.status(200).json({
+      data: faculties,
+      total: faculties.length,
+      message: faculties.length ? 'Data ditemukan' : 'Tidak ada data'
+    })
   }
 
   /**
@@ -34,8 +35,13 @@ export default class FakultasController {
     const { name } = request.only(['name'])
     const id = uuidv4()
     try {
-      const fakultas = await Faculties.create({ id: id, facultyName: name })
-      return response.status(200).json(fakultas)
+      await Faculties.create({ id: id, facultyName: name })
+      const faculty = await Faculties.query().where('id', id).whereNull('deleted_at').first()
+      return response.status(201).json({
+        data: faculty,
+        total: faculty ? 1 : 0,
+        message: faculty ? 'Data berhasil disimpan' : 'Tidak ada data'
+      })
     } catch (error) {
       console.error('Error creating user:', error)
       return response.status(400).json({ error: 'Failed to create data' })
@@ -48,7 +54,11 @@ export default class FakultasController {
   async show({ params, response }: HttpContext) {
     const { id } = params
     const faculty = await Faculties.query().where('id', id).whereNull('deleted_at').first()
-    return response.status(200).json(faculty)
+    return response.status(200).json({
+      data: faculty,
+      total: faculty ? 1 : 0,
+      message: faculty ? 'Data ditemukan' : 'Tidak ada data'
+    })
   }
 
   /**
@@ -57,7 +67,11 @@ export default class FakultasController {
   async edit({ params, response }: HttpContext) {
     const { id } = params
     const faculty = await Faculties.query().where('id', id).whereNull('deleted_at').first()
-    return response.status(200).json(faculty)
+    return response.status(200).json({
+      data: faculty,
+      total: faculty ? 1 : 0,
+      message: faculty ? 'Data ditemukan' : 'Tidak ada data'
+    })
   }
 
   /**
@@ -69,11 +83,17 @@ export default class FakultasController {
     try {
       const affectedRows = await Faculties.query().where('id', id).update({
         facultyName: name,
+        updatedAt: new Date()
       })
       if (affectedRows.length === 0) {
         return response.status(404).json({ error: 'User not found' })
       }
-      return response.status(200).json({ id, name })
+      const faculty = await Faculties.query().where('id', id).whereNull('deleted_at').first()
+      return response.status(200).json({
+        data: faculty,
+        total: faculty ? 1 : 0,
+        message: faculty ? 'Data ditemukan' : 'Tidak ada data'
+      })
     } catch (error) {
       console.error('Error updating user:', error)
       return response.status(500).json({ error: 'Internal Server Error' })
@@ -93,7 +113,7 @@ export default class FakultasController {
       if (affectedRows.length === 0) {
         return response.status(404).json({ error: 'User not found' })
       }
-      return response.status(200).json({ message: 'User deleted successfully' })
+      return response.status(204).json({ message: 'User deleted successfully' })
     } catch (error) {
       console.error('Error deleting user:', error)
       return response.status(500).json({ error: 'Internal Server Error' })

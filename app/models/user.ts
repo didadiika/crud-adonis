@@ -2,6 +2,8 @@ import { UserSchema } from '#database/schema'
 import hash from '@adonisjs/core/services/hash'
 import { compose } from '@adonisjs/core/helpers'
 import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
+import { type AccessToken } from '@adonisjs/auth/access_tokens'
+import { DbAccessTokensProvider } from '@adonisjs/auth/access_tokens'
 
 
 /**
@@ -11,6 +13,9 @@ import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
  */
 export default class User extends compose(UserSchema, withAuthFinder(hash)) {
   fullName: any
+  currentAccessToken?: AccessToken
+  static accessTokens = DbAccessTokensProvider.forModel(User)
+  
   /**
    * Get the user's initials from their full name or email.
    * Returns the first letter of first and last name if available,
@@ -23,4 +28,5 @@ export default class User extends compose(UserSchema, withAuthFinder(hash)) {
     }
     return `${first.slice(0, 2)}`.toUpperCase()
   }
+  
 }

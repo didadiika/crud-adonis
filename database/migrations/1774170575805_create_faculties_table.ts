@@ -16,6 +16,8 @@ export default class extends BaseSchema {
       table.timestamp('updated_at', { useTz: true }).nullable().defaultTo(null)
       table.timestamp('deleted_at', { useTz: true }).nullable().defaultTo(null)
     })
+
+    
   }
 
   async down() {

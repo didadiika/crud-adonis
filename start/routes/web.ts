@@ -7,10 +7,9 @@
 |
 */
 
-//import { middleware } from '#start/kernel'
 import { controllers } from '#generated/controllers'
 import router from '@adonisjs/core/services/router'
-import { middleware } from '../kernel.ts'
+import { middleware } from '#start/kernel'
 //import  { request } from 'http'
 
 
@@ -20,6 +19,7 @@ router.get('/', async ({ response }) => {
 })
 router.get('/login', [controllers.Login, 'index']).middleware(middleware.redirectIfAuthenticated())
 router.post('/login/auth', [controllers.Login, 'auth'])
+
 
 
 // Router dengan Login dahulu baru bisa akses dashboard dan logout
@@ -39,16 +39,5 @@ router
     ])
     router.resource('/master-data/mahasiswa', controllers.Mahasiswas)
     router.get('/master-data/mahasiswa/datatable/show', [controllers.Mahasiswas, 'datatable'])
-  }).middleware(middleware.auth())
-  
-
-
-router.get('/users', [controllers.Users, 'index'])
-router.post('/users', [controllers.Users, 'store'])
-router.get('/users/:id', [controllers.Users, 'show'])
-router.get('/users/:id/edit', [controllers.Users, 'edit'])
-router.put('/users/:id', [controllers.Users, 'update'])
-router.delete('/users/:id', [controllers.Users, 'destroy'])
-
-
-
+  })
+  .middleware(middleware.auth({ guards: ['web'] }))
