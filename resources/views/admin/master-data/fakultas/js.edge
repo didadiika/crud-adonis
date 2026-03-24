@@ -9,7 +9,7 @@
 $(document).ready(function() {
   const table = $('#tabel').DataTable({
       "language": {
-            "url": "/bootstrap-admin-lte/bower_components/datatables.net/Indonesian.json"
+            "url": "{{ config('app.appUrl') }}/bootstrap-admin-lte/bower_components/datatables.net/Indonesian.json"
         },
         "processing": true,
         "serverSide": true,
