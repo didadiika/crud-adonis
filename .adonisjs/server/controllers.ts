@@ -14,4 +14,7 @@ export const controllers = {
   Prints: () => import('#controllers/prints_controller'),
   Session: () => import('#controllers/session_controller'),
   Users: () => import('#controllers/users_controller'),
+  api: {
+    Fakultas: () => import('#controllers/api/fakultas_controller'),
+  },
 }
