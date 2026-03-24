@@ -10,6 +10,7 @@ import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
  * through the withAuthFinder mixin.
  */
 export default class User extends compose(UserSchema, withAuthFinder(hash)) {
+  fullName: any
   /**
    * Get the user's initials from their full name or email.
    * Returns the first letter of first and last name if available,

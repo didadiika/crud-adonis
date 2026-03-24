@@ -6,7 +6,7 @@ import Hash from '@adonisjs/core/services/hash'
 
 export default class LoginController {
 
-    public async index({ view }) {
+    public async index({ view }: HttpContext) {
 
         return view.render('login', { baseUrl: env.get('APP_URL') })
     }
@@ -17,11 +17,11 @@ export default class LoginController {
         const user = await User.findBy('email', username)
 
         if(!user){
-            return response.abort(401, 'Invalid credentials')
+            return response.abort(401)
         }
         const isValid = await Hash.verify(user.password, password)
         if (!isValid) {
-            return response.abort(401, 'Invalid password')
+            return response.abort(401)
         }
         await auth.use('web').login(user)
         return response.redirect('/dashboard')

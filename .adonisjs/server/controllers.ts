@@ -4,17 +4,14 @@
  */
 
 export const controllers = {
+  api: {
+    Fakultas: () => import('#controllers/api/fakultas_controller'),
+  },
   Dashboard: () => import('#controllers/dashboard_controller'),
   Fakultas: () => import('#controllers/fakultas_controller'),
   Jurusans: () => import('#controllers/jurusans_controller'),
   Login: () => import('#controllers/login_controller'),
   Mahasiswas: () => import('#controllers/mahasiswas_controller'),
-  NewAccount: () => import('#controllers/new_account_controller'),
   Posts: () => import('#controllers/posts_controller'),
-  Prints: () => import('#controllers/prints_controller'),
-  Session: () => import('#controllers/session_controller'),
   Users: () => import('#controllers/users_controller'),
-  api: {
-    Fakultas: () => import('#controllers/api/fakultas_controller'),
-  },
 }

@@ -51,5 +51,4 @@ router.put('/users/:id', [controllers.Users, 'update'])
 router.delete('/users/:id', [controllers.Users, 'destroy'])
 
 
-// ESCPOS Testing: Netwrok OK, USB Error: No compatible devices found
-router.get('/prints', [controllers.Prints, 'index'])
+

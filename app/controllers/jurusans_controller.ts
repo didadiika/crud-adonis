@@ -10,7 +10,7 @@ export default class JurusansController {
   async index({ view, request }: HttpContext) {
     const majors = await Major.query().orderBy('created_at', 'desc').whereNull('deleted_at')
     .whereHas('faculty', (query) => {
-      query.where('deleted_at', null)
+      query.whereNull('deleted_at')
       })
     .preload('faculty')
     const url = request.url()

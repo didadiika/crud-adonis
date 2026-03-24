@@ -41,7 +41,6 @@ export type ScannedRoutes = {
     'users.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'users.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'users.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'prints.index': { paramsTuple?: []; params?: {} }
     'api.master_data_fakultas.index': { paramsTuple?: []; params?: {} }
     'api.master_data_fakultas.create': { paramsTuple?: []; params?: {} }
     'api.master_data_fakultas.store': { paramsTuple?: []; params?: {} }
@@ -75,7 +74,6 @@ export type ScannedRoutes = {
     'users.index': { paramsTuple?: []; params?: {} }
     'users.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'users.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'prints.index': { paramsTuple?: []; params?: {} }
     'api.master_data_fakultas.index': { paramsTuple?: []; params?: {} }
     'api.master_data_fakultas.create': { paramsTuple?: []; params?: {} }
     'api.master_data_fakultas.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
@@ -106,7 +104,6 @@ export type ScannedRoutes = {
     'users.index': { paramsTuple?: []; params?: {} }
     'users.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'users.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'prints.index': { paramsTuple?: []; params?: {} }
     'api.master_data_fakultas.index': { paramsTuple?: []; params?: {} }
     'api.master_data_fakultas.create': { paramsTuple?: []; params?: {} }
     'api.master_data_fakultas.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }

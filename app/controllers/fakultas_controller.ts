@@ -96,7 +96,7 @@ export default class FakultasController {
     const search = request.input('search', '').trim()
     const page = request.input('page')
     const limit = request.input('limit')
-    const offset = limit * (page - 1)
+    
     try {
       const data = await Faculties.query()
       .whereRaw('faculty_name LIKE ? COLLATE utf8mb4_general_ci', [`%${search}%`])

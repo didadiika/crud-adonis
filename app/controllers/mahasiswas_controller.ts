@@ -9,10 +9,10 @@ export default class MahasiswasController {
   /**
    * Display a list of resource
    */
-  async index({ view, response, request }: HttpContext) {
+  async index({ view, request }: HttpContext) {
       const students = await Student.query().orderBy('created_at', 'desc').whereNull('deleted_at')
       .whereHas('major', (query) => {
-        query.where('deleted_at', null)
+        query.whereNull('deleted_at')
         })
       .preload('major')
       const url = request.url()
@@ -39,13 +39,14 @@ export default class MahasiswasController {
       'gender',
     ])
     const id = uuidv4()
+    const dateOfBirth = DateTime.fromFormat(date_of_birth, 'dd-MM-yyyy')
     try {
-      const mahasiswa = await Student.create({
+      await Student.create({
         id: id,
         majorId: major_id,
         uid: uid,
         studentName: name,
-        dateOfBirth: DateTime.fromFormat(date_of_birth, 'dd-MM-yyyy').toFormat('yyyy-MM-dd'),
+        dateOfBirth: dateOfBirth,
         address: address,
         gender: gender,
        })
