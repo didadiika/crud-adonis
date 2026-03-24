@@ -1,5 +1,6 @@
 import Faculties from '#models/faculties'
 import { v4 as uuidv4 } from 'uuid'
+import { HttpContext } from '@adonisjs/core/http'
 
 export default class FakultasController {
   /**
