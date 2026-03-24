@@ -7,10 +7,14 @@
 <script src="{{ asset('bootstrap-admin-lte/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
 <script src="{{ asset('bootstrap-admin-lte/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('bootstrap-admin-lte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
+<script src="{{ asset('bootstrap-admin-lte/bower_components/moment/min/moment-with-locales.min.js') }}"></script>
 <script>
 $(document).ready(function() {
-  $('#datepicker').datepicker({
-      autoclose: true
+  let datepickerInput = $('#datepicker-input').datepicker({
+      autoclose: true,
+    })
+  let datepickerUpdate = $('#datepicker-update').datepicker({
+      autoclose: true,
     })
     
   const table = $('#tabel').DataTable({
@@ -30,7 +34,10 @@ $(document).ready(function() {
         { data: 'student_uid' },
         { data: 'student_name' },
         { data: 'student_gender' },
-        { data: 'student_date_of_birth' },
+        { data: 'student_date_of_birth', render: function (data) {
+                    if (!data) return '-'
+                    return moment(data).format('DD-MM-YYYY')
+                  } },
         { data: 'student_address' },
         { data: 'action', orderable: false, searchable: false }
         ],
@@ -77,14 +84,31 @@ $("#form-tambah").find('[name = "faculty_id"]').on('select2:select', function (e
       success: function(data) {
         
         let majorSelect = $("#form-tambah").find('[name="major_id"]')
-
-        // kosongkan dulu option lama
         majorSelect.empty()
-
-        // option default
         majorSelect.append(`<option value="">Pilih*</option>`)
+        data.forEach(item => {
+          majorSelect.append(`
+            <option value="${item.id}">${item.majorName}</option>
+          `)
+        })
+      },
+      error: function(err) {
+        alert('Gagal mengambil data!')
+        console.log(err)
+      }
+    })
+});
 
-        // looping data dari backend
+$("#form-update").find('[name = "faculty_id"]').on('select2:select', function (e) {
+  const faculty_id = $("#form-update").find('[name = "faculty_id"]').val();
+  $.ajax({
+      url:`/master-data/jurusan/${faculty_id}/jurusan-per-fakultas`,
+      method: 'GET',
+      success: function(data) {
+        
+        let majorSelect = $("#form-update").find('[name="major_id"]')
+        majorSelect.empty()
+        majorSelect.append(`<option value="">Pilih*</option>`)
         data.forEach(item => {
           majorSelect.append(`
             <option value="${item.id}">${item.majorName}</option>
@@ -107,9 +131,24 @@ $("#form-tambah").find('[name = "faculty_id"]').on('select2:select', function (e
       method: 'GET',
       success: function(data) {
         $("#form-update").attr('action',`/master-data/mahasiswa/${id}`);
-        //var option = new Option(data.faculty.facultyName, data.facultyId, true, true);
-        //$('#form-update').find('[name="faculty_id"]').append(option).trigger('change');
+        const option = new Option(data.major.faculty.facultyName, data.major.faculty.id, true, true);
+        $('#form-update').find('[name="faculty_id"]').append(option).trigger('change');
+        let majorSelect = $("#form-update").find('[name="major_id"]')
+        majorSelect.empty()
+        majorSelect.append(`<option value="">Pilih*</option>`)
+        data.majors_of_faculty.forEach(item => {
+          const selected = item.id === data.major.id ? 'selected' : ''
+          majorSelect.append(`
+            <option value="${item.id}" ${selected}>${item.majorName}</option>
+          `)
+        })
+        
+        $('#form-update').find('[name="uid"]').val(data.uid);
         $('#form-update').find('[name="name"]').val(data.studentName);
+        $('#form-update').find('[name="address"]').html(data.address);
+        const formatted = moment(data.dateOfBirth).format('DD-MM-YYYY')
+        datepickerUpdate.datepicker('setDate', formatted);
+        $('#form-update').find('input[name="gender"][value="' + data.gender + '"]').prop('checked', true)
         $('#modal-edit').modal('show');
       },
       error: function(err) {

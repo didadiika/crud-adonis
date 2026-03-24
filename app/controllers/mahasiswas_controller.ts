@@ -3,6 +3,7 @@ import Student from '#models/student'
 import { v4 as uuidv4 } from 'uuid'
 import Database from '@adonisjs/lucid/services/db'
 import { DateTime } from 'luxon'
+import Major from '#models/major'
 
 export default class MahasiswasController {
   /**
@@ -62,8 +63,24 @@ export default class MahasiswasController {
       const { id } = params
       const student = await Student.query().where('id', id)
       .whereNull('deleted_at')
-      .preload('major').first()
-      return response.status(200).json(student)
+      .preload('major', (majorQuery) => {
+        majorQuery.preload('faculty')
+      })
+      .firstOrFail()
+
+    const faculty_id = student?.major?.faculty?.id
+    let majors_of_faculty: any[] = []
+    if(faculty_id){
+      majors_of_faculty = await Major.query()
+      .where('faculty_id', faculty_id)
+      .whereNull('deleted_at')
+      .orderBy('major_name', 'asc')
+      .select('id', 'major_name')
+    }
+      return response.status(200).json({
+    ...student.toJSON(),
+    majors_of_faculty,
+  })
     }
 
   /**
@@ -82,7 +99,7 @@ export default class MahasiswasController {
    */
   async update({ params, request, response }: HttpContext) {
       const { id } = params
-      const { major_id, student_name, uid, date_of_birth, address, gender } = request.only([
+      const { major_id, name, uid, date_of_birth, address, gender } = request.only([
       'major_id',
       'name',
       'uid',
@@ -94,8 +111,8 @@ export default class MahasiswasController {
         const affectedRows = await Student.query().where('id', id).update({
           majorId: major_id,
           uid: uid,
-          studentName: student_name,
-          dateOfBirth: date_of_birth,
+          studentName: name,
+          dateOfBirth: DateTime.fromFormat(date_of_birth, 'dd-MM-yyyy').toFormat('yyyy-MM-dd'),
           address: address,
           gender: gender,
         })

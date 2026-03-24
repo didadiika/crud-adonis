@@ -18,12 +18,13 @@ import { middleware } from './kernel.ts'
 router.get('/', async ({ response }) => {
   return response.redirect('/login')
 })
-router.get('/login', [controllers.Login, 'index'])
+router.get('/login', [controllers.Login, 'index']).middleware(middleware.redirectIfAuthenticated())
 router.post('/login/auth', [controllers.Login, 'auth'])
 
 
 // Router dengan Login dahulu baru bisa akses dashboard dan logout
-router.group(() => {
+router
+  .group(() => {
     router.get('/dashboard', [controllers.Dashboard, 'index'])
     router.get('/logout', [controllers.Login, 'logout'])
     router.resource('/master-data/fakultas', controllers.Fakultas)
