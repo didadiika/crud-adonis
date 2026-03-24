@@ -1,4 +1,4 @@
-import { Redirect, type HttpContext } from '@adonisjs/core/http'
+import { type HttpContext } from '@adonisjs/core/http'
 import Faculties from '#models/faculties'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -6,7 +6,7 @@ export default class FakultasController {
   /**
    * Display a list of resource
    */
-  async index({ view, response, request }: HttpContext) {
+  async index({ view, request }: HttpContext) {
     const faculties = await Faculties.query().orderBy('created_at','desc').whereNull('deleted_at')
     const url = request.url()
     const segments = url.split('/').filter(Boolean)
@@ -27,7 +27,7 @@ export default class FakultasController {
     const id = uuidv4()
     try {
       const fakultas = await Faculties.create({ id: id, facultyName: name })
-      return response.redirect().back()
+      return response.status(200).json(fakultas)
     } catch (error) {
       console.error('Error creating user:', error)
       return response.status(400).json({ error: 'Failed to create data' })

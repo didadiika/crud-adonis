@@ -7,7 +7,7 @@ export default class JurusansController {
   /**
    * Display a list of resource
    */
-  async index({ view, response, request }: HttpContext) {
+  async index({ view, request }: HttpContext) {
     const majors = await Major.query().orderBy('created_at', 'desc').whereNull('deleted_at')
     .whereHas('faculty', (query) => {
       query.where('deleted_at', null)
@@ -32,7 +32,7 @@ export default class JurusansController {
     const id = uuidv4()
     try {
       const jurusan = await Major.create({ id: id, facultyId: faculty_id, majorName: name })
-      return response.redirect().back()
+      return response.status(200).json(jurusan)
     } catch (error) {
       console.error('Error creating user:', error)
       return response.status(400).json({ error: 'Failed to create data' })
@@ -106,7 +106,7 @@ export default class JurusansController {
       const search = request.input('search', '').trim()
       const page = request.input('page')
       const limit = request.input('limit')
-      const offset = limit * (page - 1)
+      
       try {
         const data = await Major.query()
         .whereRaw('major_name LIKE ? COLLATE utf8mb4_general_ci', [`%${search}%`])

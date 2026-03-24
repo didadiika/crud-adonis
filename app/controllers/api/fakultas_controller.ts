@@ -35,7 +35,7 @@ export default class FakultasController {
     const id = uuidv4()
     try {
       const fakultas = await Faculties.create({ id: id, facultyName: name })
-      return response.redirect().back()
+      return response.status(200).json(fakultas)
     } catch (error) {
       console.error('Error creating user:', error)
       return response.status(400).json({ error: 'Failed to create data' })
