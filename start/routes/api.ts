@@ -4,7 +4,7 @@ import { controllers } from '#generated/controllers'
 
 router
   .group(() => {
-    router.post('/users/tokens', [controllers.api.Tokens, 'index'])
+    router.get('/users/tokens', [controllers.api.Tokens, 'index'])
 
     router
       .group(() => {
