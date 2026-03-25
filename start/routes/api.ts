@@ -1,5 +1,4 @@
 import router from '@adonisjs/core/services/router'
-import User from '#models/user'
 import { middleware } from '#start/kernel'
 import { controllers } from '#generated/controllers'
 
