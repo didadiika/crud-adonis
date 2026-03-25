@@ -6,6 +6,9 @@
 export const controllers = {
   api: {
     Fakultas: () => import('#controllers/api/fakultas_controller'),
+    Jurusans: () => import('#controllers/api/jurusans_controller'),
+    Mahasiswas: () => import('#controllers/api/mahasiswas_controller'),
+    Tokens: () => import('#controllers/api/tokens_controller'),
   },
   Dashboard: () => import('#controllers/dashboard_controller'),
   Fakultas: () => import('#controllers/fakultas_controller'),

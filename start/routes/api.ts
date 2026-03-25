@@ -5,18 +5,13 @@ import { controllers } from '#generated/controllers'
 
 router
   .group(() => {
-    router.post('/users/:id/tokens', async ({ params }) => {
-      const user = await User.findOrFail(params.id)
-      const token = await User.accessTokens.create(user, ['*'], {
-        expiresIn: '7 days',
-      })
-
-      return { type: 'bearer', value: token.value!.release() }
-    })
+    router.post('/users/tokens', [controllers.api.Tokens, 'index'])
 
     router
       .group(() => {
         router.resource('/fakultas', controllers.api.Fakultas)
+        router.resource('/jurusan', controllers.api.Jurusans)
+        router.resource('/mahasiswa', controllers.Mahasiswas)
     }).middleware(middleware.auth({ guards: ['api'] }))
     
   })

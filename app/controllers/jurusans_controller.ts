@@ -8,11 +8,12 @@ export default class JurusansController {
    * Display a list of resource
    */
   async index({ view, request }: HttpContext) {
-    const majors = await Major.query().orderBy('created_at', 'desc').whereNull('deleted_at')
-    .whereHas('faculty', (query) => {
-      query.whereNull('deleted_at')
+    const majors = await Major.query()
+      .orderBy('created_at', 'desc')
+      .whereNull('deleted_at')
+      .whereHas('faculty', (query) => {
+        query.whereNull('deleted_at')
       })
-    .preload('faculty')
     const url = request.url()
     const segments = url.split('/').filter(Boolean)
     return view.render('admin/master-data/jurusan/index', { majors, segments })
@@ -45,8 +46,9 @@ export default class JurusansController {
   async show({ params, response }: HttpContext) {
     const { id } = params
     const major = await Major.query().where('id', id)
-    .whereNull('deleted_at')
-    .preload('faculty').first()
+      .whereNull('deleted_at')
+      .preload('faculty')
+      .first()
     return response.status(200).json(major)
   }
 
