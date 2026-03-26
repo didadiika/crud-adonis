@@ -7,7 +7,8 @@ export default class DashboardController {
   async index({ view, request }: HttpContext) {
     const url = request.url()
     const segments = url.split('/').filter(Boolean)
-    return view.render('admin/dashboard', { segments })
+    const jam = new Date()
+    return view.render('admin/dashboard', { segments, jam })
   }
 
   /**
