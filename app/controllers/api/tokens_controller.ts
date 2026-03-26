@@ -6,7 +6,7 @@ export default class TokensController {
   /**
    * Display a list of resource
    */
-  async index({ response, request }: HttpContext) {
+  async tokens({ response, request }: HttpContext) {
     const username = request.input('username')
     const password = request.input('password')
 
@@ -18,10 +18,30 @@ export default class TokensController {
     if (!isValid) {
       return response.status(401)
     }
-    const token = await User.accessTokens.create(authenticate, ['*'], {
-      expiresIn: '7 days',
+    const accessToken = await User.accessTokens.create(authenticate, ['*'], {
+      expiresIn: '1 days',
     })
-    return { type: 'bearer', value: token.value!.release() }
+    const refreshToken = await User.accessTokens.create(authenticate, ['refresh'], {
+      expiresIn: '30 days',
+    })
+    return {
+      type: 'bearer',
+      access_token: accessToken.value!.release(),
+      refresh_token: refreshToken.value!.release()
+    }
+  }
+
+  async refresh_token({ auth }: HttpContext) {
+    const user = auth.user!
+
+    const newToken = await User.accessTokens.create(user, ['*'], {
+      expiresIn: '1 days',
+  })
+
+   return {
+      type: 'bearer',
+      access_token: newToken.value!.release(),
+    }
   }
 
   /**

@@ -35,7 +35,8 @@ export type ScannedRoutes = {
     'master_data_mahasiswa.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'master_data_mahasiswa.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'mahasiswas.datatable': { paramsTuple?: []; params?: {} }
-    'tokens.index': { paramsTuple?: []; params?: {} }
+    'tokens.tokens': { paramsTuple?: []; params?: {} }
+    'tokens.refresh_token': { paramsTuple?: []; params?: {} }
     'fakultas.index': { paramsTuple?: []; params?: {} }
     'fakultas.create': { paramsTuple?: []; params?: {} }
     'fakultas.store': { paramsTuple?: []; params?: {} }
@@ -80,7 +81,6 @@ export type ScannedRoutes = {
     'master_data_mahasiswa.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'master_data_mahasiswa.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'mahasiswas.datatable': { paramsTuple?: []; params?: {} }
-    'tokens.index': { paramsTuple?: []; params?: {} }
     'fakultas.index': { paramsTuple?: []; params?: {} }
     'fakultas.create': { paramsTuple?: []; params?: {} }
     'fakultas.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
@@ -116,7 +116,6 @@ export type ScannedRoutes = {
     'master_data_mahasiswa.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'master_data_mahasiswa.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'mahasiswas.datatable': { paramsTuple?: []; params?: {} }
-    'tokens.index': { paramsTuple?: []; params?: {} }
     'fakultas.index': { paramsTuple?: []; params?: {} }
     'fakultas.create': { paramsTuple?: []; params?: {} }
     'fakultas.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
@@ -135,6 +134,8 @@ export type ScannedRoutes = {
     'master_data_fakultas.store': { paramsTuple?: []; params?: {} }
     'master_data_jurusan.store': { paramsTuple?: []; params?: {} }
     'master_data_mahasiswa.store': { paramsTuple?: []; params?: {} }
+    'tokens.tokens': { paramsTuple?: []; params?: {} }
+    'tokens.refresh_token': { paramsTuple?: []; params?: {} }
     'fakultas.store': { paramsTuple?: []; params?: {} }
     'jurusan.store': { paramsTuple?: []; params?: {} }
     'mahasiswa.store': { paramsTuple?: []; params?: {} }
