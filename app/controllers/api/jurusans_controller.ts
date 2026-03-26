@@ -101,6 +101,7 @@ export default class JurusansController {
       const affectedRows = await Major.query().where('id', id).update({
         facultyId: faculty_id,
         majorName: name,
+        updatedAt: new Date(),
       })
       if (affectedRows.length === 0) {
         return response.status(404).json({ error: 'User not found' })

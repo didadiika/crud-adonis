@@ -121,6 +121,7 @@ export default class MahasiswasController {
         dateOfBirth: date_of_birth,
         address: address,
         gender: gender,
+        updatedAt: new Date(),
       })
       if (affectedRows.length === 0) {
         return response.status(404).json({ error: 'User not found' })

@@ -116,6 +116,7 @@ export default class MahasiswasController {
           dateOfBirth: DateTime.fromFormat(date_of_birth, 'dd-MM-yyyy').toFormat('yyyy-MM-dd'),
           address: address,
           gender: gender,
+          updatedAt: new Date(),
         })
         if (affectedRows.length === 0) {
           return response.status(404).json({ error: 'User not found' })

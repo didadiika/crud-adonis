@@ -83,7 +83,7 @@ export default class FakultasController {
     try {
       const affectedRows = await Faculties.query().where('id', id).update({
         facultyName: name,
-        updatedAt: new Date()
+        updatedAt: new Date(),
       })
       if (affectedRows.length === 0) {
         return response.status(404).json({ error: 'User not found' })
