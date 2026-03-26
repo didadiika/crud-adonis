@@ -192,7 +192,7 @@ $.ajax({
     success: function(data)
     {
       console.log('Submit Berhasil !');
-      location.reload();
+      table.ajax.reload(null, false);
     },
     error: function (data) {
       console.log('Submit Error !'+form.serialize());
@@ -245,7 +245,7 @@ $("#form-hapus").submit(function(e) {
           success: function(data)
           {
             console.log('Submit Hapus Berhasil !');
-            location.reload();
+            table.ajax.reload(null, false);
           },
           error: function (data) {
             console.log('Submit Error !');
