@@ -27,7 +27,9 @@ export default class TokensController {
     return {
       type: 'bearer',
       access_token: accessToken.value!.release(),
-      refresh_token: refreshToken.value!.release()
+      access_expires_at: accessToken.expiresAt,
+      refresh_token: refreshToken.value!.release(),
+      refresh_expires_at: refreshToken.expiresAt,
     }
   }
 
