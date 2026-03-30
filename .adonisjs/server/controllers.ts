@@ -15,6 +15,5 @@ export const controllers = {
   Jurusans: () => import('#controllers/jurusans_controller'),
   Login: () => import('#controllers/login_controller'),
   Mahasiswas: () => import('#controllers/mahasiswas_controller'),
-  Posts: () => import('#controllers/posts_controller'),
   Users: () => import('#controllers/users_controller'),
 }

@@ -8,6 +8,7 @@ export default class TokensController {
    * Display a list of resource
    */
   async tokens({ response, request }: HttpContext) {
+    // User login lalu sistem me generate Accees Token dan Refresh Token Baru
     const username = request.input('username')
     const password = request.input('password')
 
@@ -36,23 +37,10 @@ export default class TokensController {
     }
   }
 
-  // async refresh_token({ auth }: HttpContext) {
-  //   const user = auth.user!
-
-  //   const newToken = await User.accessTokens.create(user, ['*'], {
-  //     expiresIn: '1 days',
-  // })
-
-  // return {
-  //     type: 'bearer',
-  //     access_token: newToken.value!.release(),
-  //   }
-  // }
-
-  // Jika Refresh Token lama masih ada dan berlaku maka Generate Access Token dan Refresh Token Baru
-
-
   async refresh_token({ request, response }: HttpContext) {
+    // Rotasi Refresh Token baru, Hapus refresh token lama, Generate Access Token Baru
+    // Syarat harus mempunyai Refresh token lama yang masih berlaku jika tidak maka user wajib logout
+
     const authHeader = request.header('authorization')!
     const refreshToken = authHeader.replace('Bearer ', '')
     const token = await User.accessTokens.verify(new Secret(refreshToken))
@@ -90,37 +78,5 @@ export default class TokensController {
       refresh_token: newRefreshToken.value!.release(),
       refresh_expires_at: newRefreshToken.expiresAt,
     }
-    
   }
-
-
-  /**
-   * Display form to create a new record
-   */
-  async create({}: HttpContext) {}
-
-  /**
-   * Handle form submission for the create action
-   */
-  async store({}: HttpContext) {}
-
-  /**
-   * Show individual record
-   */
-  async show({}: HttpContext) {}
-
-  /**
-   * Edit individual record
-   */
-  async edit({}: HttpContext) {}
-
-  /**
-   * Handle form submission for the edit action
-   */
-  async update({}: HttpContext) {}
-
-  /**
-   * Delete record
-   */
-  async destroy({}: HttpContext) {}
 }
