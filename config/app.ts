@@ -9,6 +9,7 @@ import { defineConfig } from '@adonisjs/core/http'
  */
 export const appUrl = env.get('APP_URL')
 export const appName = env.get('APP_NAME')
+export const timeZone = env.get('TZ')
 /**
  * The configuration settings used by the HTTP server
  */

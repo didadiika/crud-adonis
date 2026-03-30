@@ -1,6 +1,7 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import User from '#models/user'
 import Hash from '@adonisjs/core/services/hash'
+import { Secret } from '@adonisjs/core/helpers'
 
 export default class TokensController {
   /**
@@ -20,9 +21,11 @@ export default class TokensController {
     }
     const accessToken = await User.accessTokens.create(authenticate, ['*'], {
       expiresIn: '1 days',
+      name: 'access',
     })
     const refreshToken = await User.accessTokens.create(authenticate, ['refresh'], {
       expiresIn: '30 days',
+      name: 'refresh',
     })
     return {
       type: 'bearer',
@@ -33,18 +36,63 @@ export default class TokensController {
     }
   }
 
-  async refresh_token({ auth }: HttpContext) {
-    const user = auth.user!
+  // async refresh_token({ auth }: HttpContext) {
+  //   const user = auth.user!
 
-    const newToken = await User.accessTokens.create(user, ['*'], {
-      expiresIn: '1 days',
-  })
+  //   const newToken = await User.accessTokens.create(user, ['*'], {
+  //     expiresIn: '1 days',
+  // })
 
-   return {
-      type: 'bearer',
-      access_token: newToken.value!.release(),
+  // return {
+  //     type: 'bearer',
+  //     access_token: newToken.value!.release(),
+  //   }
+  // }
+
+  // Jika Refresh Token lama masih ada dan berlaku maka Generate Access Token dan Refresh Token Baru
+
+
+  async refresh_token({ request, response }: HttpContext) {
+    const authHeader = request.header('authorization')!
+    const refreshToken = authHeader.replace('Bearer ', '')
+    const token = await User.accessTokens.verify(new Secret(refreshToken))
+
+    if (!token) {
+      return response.unauthorized({ message: 'Invalid refresh token' })
     }
+
+    if (token.name !== 'refresh') {
+      return response.unauthorized({ message: 'Invalid token type' })
+    }
+
+    if (token.expiresAt && token.expiresAt < new Date()) {
+      return response.unauthorized({ message: 'Refresh token expired' })
+    }
+
+    const user = await User.find(token.tokenableId)
+    if (!user) {
+      return response.unauthorized({ message: 'User not found' })
+    }
+    await User.accessTokens.delete(user, token.identifier)
+    const accessToken = await User.accessTokens.create(user, ['*'], {
+      expiresIn: '1 days',
+      name: 'access',
+    })
+    const newRefreshToken = await User.accessTokens.create(user, ['refresh'], {
+      expiresIn: '30 days',
+      name: 'refresh',
+    })
+
+    return {
+      type: 'bearer',
+      access_token: accessToken.value!.release(),
+      access_expires_at: accessToken.expiresAt,
+      refresh_token: newRefreshToken.value!.release(),
+      refresh_expires_at: newRefreshToken.expiresAt,
+    }
+    
   }
+
 
   /**
    * Display form to create a new record
