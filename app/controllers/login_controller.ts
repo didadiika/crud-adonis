@@ -21,7 +21,7 @@ export default class LoginController {
         }
         const isValid = await Hash.verify(user.password, password)
         if (!isValid) {
-            return response.abort(401)
+            return response.redirect('/login')
         }
         await auth.use('web').login(user)
         return response.redirect('/dashboard')

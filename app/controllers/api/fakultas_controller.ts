@@ -6,22 +6,25 @@ export default class FakultasController {
   /**
    * Display a list of resource
    */
-  async index({ request, response }: HttpContext) {
-    const limit = request.input('limit')
-    const page = request.input('page')
+async index({ request, response }: HttpContext) {
+  const limit = Math.min(Number(request.input('limit', 10)), 100)
+  const page = Math.max(Number(request.input('page', 1)), 1)
+  const faculties = await Faculties
+    .query()
+    .whereNull('deleted_at')
+    .orderBy('created_at', 'desc')
+    .forPage(page, limit)
+  return response.status(200).json({
+    data: faculties,
+    total: faculties.length,
+    page,
+    limit,
+    message: faculties.length
+      ? 'Data ditemukan'
+      : 'Tidak ada data'
+  })
 
-    let query = Faculties.query().orderBy('created_at', 'desc').whereNull('deleted_at')
-
-    if (limit && page) {
-      query = query.forPage(page, limit)
-    }
-    const faculties = await query
-    return response.status(200).json({
-      data: faculties,
-      total: faculties.length,
-      message: faculties.length ? 'Data ditemukan' : 'Tidak ada data'
-    })
-  }
+}
 
   /**
    * Display form to create a new record
